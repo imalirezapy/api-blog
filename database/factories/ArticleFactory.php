@@ -11,9 +11,10 @@ class ArticleFactory extends Factory
     {
         return [
             'slug' => $this->faker->slug(),
-            'title' => $this->faker->title(),
-            'body' => $this->faker->sentence(),
+            'title' => $this->faker->sentence(),
+            'body' => $this->faker->paragraph(10),
             'thumbnail' => $this->faker->imageUrl(600, 400),
+            'likes' => $this->faker->numberBetween(0, 50),
             'created_at' => now(),
             'updated_at' => now(),
         ];
