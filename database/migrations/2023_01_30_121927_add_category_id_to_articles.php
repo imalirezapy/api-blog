@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('article_categories', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnUpdate();
-
-            $table->foreignId('article_id')->constrained('articles')->cascadeOnUpdate()->cascadeOnDelete();
-
-            $table->timestamps();
+        Schema::table('articles', function (Blueprint $table) {
+            $table->foreignId('category_id')->constrained('categories')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
         });
     }
 
@@ -31,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_categories');
+        Schema::table('articles', function (Blueprint $table) {
+            $table->dropColumn('paid');
+        });
     }
 };
