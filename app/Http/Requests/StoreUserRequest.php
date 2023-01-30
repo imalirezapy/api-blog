@@ -32,11 +32,11 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'fname' => ['required', 'string', 'min:3', 'max:50'],
-            'lname' => ['required', 'string', 'min:3', 'max:50'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'fname' => ['string', 'min:3', 'max:50'],
+            'lname' => ['string', 'min:3', 'max:50'],
+            'email' => ['string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', Password::default()],
-            'profile' => [ 'file',
+            'profile' => ['file',
                 File::image()
                     ->max(2048)
                     ->dimensions(Rule::dimensions()->maxHeight(1000)->maxWidth(1000))
