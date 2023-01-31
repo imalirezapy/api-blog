@@ -6,14 +6,23 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ArticleCollection extends ResourceCollection
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
+
     public function toArray($request)
     {
-        return parent::toArray($request);
+
+        return [
+            'data' => $this->collection->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'slug' => $item->slug,
+                    'title' => $item->title,
+                    'body' => $item->body,
+                    'thumbnail' => $item->thumbnail,
+                    'likes' => $item->likes,
+                    'created_at' =>date_format($item->created_at, 'Y-d-m H:i:s'),
+                    'category' => $item->category()->slug
+                ];
+            })
+        ];
     }
 }

@@ -20,7 +20,7 @@ class ArticleSeeder extends Seeder
         Category::factory()->has(
             Article::factory()
                 ->hasComments(3)
-                ->count(10))
-            ->create();
+                ->count(3))
+            ->count(4)->create();
     }
 }
