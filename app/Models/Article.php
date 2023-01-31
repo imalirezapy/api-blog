@@ -24,7 +24,7 @@ class Article extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class)->firstOrFail();
+        return $this->belongsTo(Category::class);
     }
 
     public function likes()

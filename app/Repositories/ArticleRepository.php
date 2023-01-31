@@ -19,15 +19,14 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function findId(int $id): self
     {
-        $this->article = Article::findOrFail($id);
+        $this->article = Article::find($id);
 
         return $this;
     }
 
     public function findSlug(string $slug): self
     {
-        $this->article = Article::whereSlug($slug)->firstOrFail();
-
+        $this->article = Article::whereSlug($slug)->first();
         return $this;
     }
 
@@ -44,7 +43,12 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function update(array $details): self
     {
-        $this->article = Article::updated($details);
+        $this->article = Article::update($details);
         return $this;
+    }
+
+    public function get()
+    {
+        return $this->article;
     }
 }

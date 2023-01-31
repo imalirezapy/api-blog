@@ -15,14 +15,13 @@ class ArticleResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'slug' => $this->slug,
             'title' => $this->title,
             'body' => $this->body,
             'thumbnail' => $this->thumbnail,
             'likes' => $this->likes,
-            'created_at' =>date_format($this->created_at, 'Y-d-m'),
-            'category' => $this->category()->slug
+            'created_at' =>date_format($this->created_at, 'Y-d-m H:i:s'),
+            'category' => $this->category()->first(['slug', 'title'])
         ];
     }
 }
