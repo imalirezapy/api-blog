@@ -5,16 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
-use App\Models\User;
+use App\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+    private UserRepositoryInterface $userRepository;
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index()
     {
         dd('okey');
@@ -43,9 +47,8 @@ class UserController extends Controller
         $validated['password'] = Hash::make($validated['password']);
         $validated['profile'] = $profile ?? null;
 
-        $user = User::create($validated);
 
-        $token = $user->createToken('public')->plainTextToken;
+        $token = $this->userRepository->create($validated)->createToken();
 
         return response()->json([
             'message' => 'Token generated',
@@ -59,7 +62,7 @@ class UserController extends Controller
     {
         $credentials =  $request->only('email', 'password');
 
-        if (!$user = Auth::attempt($credentials)) {
+        if (!$user = $this->userRepository->attempt($credentials, 'email')) {
             throw new HttpResponseException(response()->json([
                 'message' => 'Validation errors',
                 'data' => [
@@ -68,14 +71,10 @@ class UserController extends Controller
             ], Response::HTTP_BAD_REQUEST));
         }
 
-        $user = User::whereEmail($request->email)->first();
-
-        $token = $user->createToken('public')->plainTextToken;
-
         return response()->json([
             'message' => 'New Token generated.',
             'data' => [
-                'token' => $token
+                'token' => $user->createToken()
             ]
         ], Response::HTTP_OK);
     }
