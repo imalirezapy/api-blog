@@ -11,13 +11,13 @@ class ArticleRepository implements ArticleRepositoryInterface
     public Article|null $article;
     public function all(bool $pagination = false, int $pages = 10)
     {
-        if (!$value = request()->query('search')) {
+        if ($value = request()->query('search')) {
             $articles = Article::where('title','LIKE', '%'.urldecode($value).'%');
         }else{
             $articles = Article::orderBy('id', 'desc');
         };
         if ($pagination) {
-            $articles = $articles->paginate(10)->withQueryString();
+            $articles = $articles->paginate($pages)->withQueryString();
         }
 
         return $articles;
