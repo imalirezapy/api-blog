@@ -13,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    private UserRepositoryInterface $userRepository;
-    public function __construct(UserRepositoryInterface $userRepository)
+    private UserRepositoryInterface $repository;
+    public function __construct(UserRepositoryInterface $repository)
     {
-        $this->userRepository = $userRepository;
+        $this->repository = $repository;
     }
 
     public function index()
@@ -48,7 +48,7 @@ class UserController extends Controller
             $validated['profile'] = $profile;
         }
 
-        $token = $this->userRepository->create($validated)->createToken();
+        $token = $this->repository->create($validated)->createToken();
 
         return response()->json([
             'message' => 'Token generated',
@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         $credentials =  $request->only('email', 'password');
 
-        if (!$user = $this->userRepository->attempt($credentials, 'email')) {
+        if (!$user = $this->repository->attempt($credentials, 'email')) {
             throw new HttpResponseException(response()->json([
                 'message' => 'Validation errors',
                 'data' => [
