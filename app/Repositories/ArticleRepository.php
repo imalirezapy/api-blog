@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\ArticleRepositoryInterface;
 use App\Models\Article;
+use App\Models\Category;
 
 
 class ArticleRepository implements ArticleRepositoryInterface
@@ -41,9 +42,9 @@ class ArticleRepository implements ArticleRepositoryInterface
         return $this->article->delete();
     }
 
-    public function create(array $details): self
+    public function create(int $category_id, array $details): self
     {
-        $this->article = Article::create($details);
+        $this->article = Category::find($category_id)->articles()->create($details);
         return $this;
     }
 

@@ -18,7 +18,7 @@ class ArticleResource extends JsonResource
             'slug' => $this->slug,
             'title' => $this->title,
             'body' => $this->body,
-            'thumbnail' => $this->thumbnail,
+            'thumbnail' => env('app_url'). '/images/' .$this->thumbnail,
             'likes' => $this->likes,
             'created_at' =>date_format($this->created_at, 'Y-d-m H:i:s'),
             'category' => $this->category()->first(['slug', 'title'])

@@ -16,7 +16,7 @@ class ArticleCollection extends ResourceCollection
                     'slug' => $item->slug,
                     'title' => $item->title,
                     'body' => $item->body,
-                    'thumbnail' => $item->thumbnail,
+                    'thumbnail' => env('app_url'). '/images/' .$item->thumbnail,
                     'likes' => $item->likes,
                     'created_at' =>date_format($item->created_at, 'Y-d-m H:i:s'),
                     'category' => $item->category()->first()->slug
