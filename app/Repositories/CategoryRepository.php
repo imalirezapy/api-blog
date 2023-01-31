@@ -45,7 +45,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function update(array $details): self
     {
-        $this->category = Category::update($details);
+        $this->category = $this->category->update($details) ?? null;
         return $this;
     }
 

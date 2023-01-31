@@ -49,7 +49,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function update(array $details): self
     {
-        $this->article = Article::update($details);
+        $this->article = $this->article->update($details) ?? null;
         return $this;
     }
 
