@@ -14,6 +14,11 @@ class CategoryRepository implements CategoryRepositoryInterface
         return Category::all();
     }
 
+    public function articles()
+    {
+        return $this->category->articles()->get();
+    }
+
     public function findId(int $id): self
     {
         $this->category = Category::find($id);

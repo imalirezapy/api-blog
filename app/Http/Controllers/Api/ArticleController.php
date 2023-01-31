@@ -31,7 +31,7 @@ class ArticleController extends Controller
             throw new HttpResponseException(response()->json([
                 'message' => 'Article not found',
                 'data' => [],
-            ], Response::HTTP_BAD_REQUEST));
+            ], Response::HTTP_NOT_FOUND));
         }
 
         return new ArticleResource($article);
