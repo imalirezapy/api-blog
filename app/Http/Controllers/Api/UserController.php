@@ -39,14 +39,14 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        if ($request->hasFile('profile')) {
-            $profile = $this->uploadFile($request);
-        }
-
         $validated = $request->validated();
         $validated['password'] = Hash::make($validated['password']);
-        $validated['profile'] = $profile ?? null;
 
+
+        if ($request->hasFile('profile')) {
+            $profile = $this->uploadFile($request);
+            $validated['profile'] = $profile;
+        }
 
         $token = $this->userRepository->create($validated)->createToken();
 
