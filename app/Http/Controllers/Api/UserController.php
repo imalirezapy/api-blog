@@ -61,8 +61,9 @@ class UserController extends Controller
     public function login(LoginUserRequest $request)
     {
         $credentials =  $request->only('email', 'password');
+        $user = $this->repository->attempt($credentials, 'email');
 
-        if (!$user = $this->repository->attempt($credentials, 'email')) {
+        if (!$user->get()) {
             throw new HttpResponseException(response()->json([
                 'message' => 'Validation errors',
                 'data' => [

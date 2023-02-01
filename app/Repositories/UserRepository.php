@@ -21,7 +21,7 @@ class UserRepository implements UserRepositoryInterface
             return false;
         }
 
-        $this->user = User::where($primary_key, $credentials[$primary_key])->firstOrFail();
+        $this->user = User::where($primary_key, $credentials[$primary_key])->first();
 
         return $this;
     }
@@ -29,5 +29,10 @@ class UserRepository implements UserRepositoryInterface
     public function createToken(string $name = 'public'): string
     {
         return $this->user->createToken($name)->plainTextToken;
+    }
+
+    public function get()
+    {
+        return $this->user;
     }
 }
