@@ -23,10 +23,12 @@ class ArticleController extends Controller
         $this->repository = $repository;
     }
 
+
     public function index()
     {
         return  new ArticleCollection($this->repository->all(true));
     }
+
 
     public function show(string $slug)
     {
@@ -36,19 +38,8 @@ class ArticleController extends Controller
 
         return new ArticleResource($article);
     }
-    protected function uploadFile(Request $request)
-    {
-        $filenameWithExt = $request->file('thumbnail')->getClientOriginalName();
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        $filename = \hash('sha256', $filename . now()->timestamp);
 
-        $extension = $request->file('thumbnail')->getClientOriginalExtension();
-        $fileNameToStore = $filename.'.'.$extension;
 
-        $request->file('thumbnail')->storeAs('images',$fileNameToStore);
-
-        return $fileNameToStore;
-    }
     public function store(StoreArticleRequest $request)
     {
         $validated = $request->validated();
@@ -56,7 +47,8 @@ class ArticleController extends Controller
         $category_id = $validated['category_id'];
         unset($validated['category_id']);
 
-        $validated['thumbnail'] = $this->uploadFile($request);
+        $validated['thumbnail'] = Helper::uploadImage($request, 'thumbnail');
+
         $validated['likes'] = 0;
 
         $article = $this->repository->create($category_id, $validated)->get();

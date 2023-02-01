@@ -20,33 +20,20 @@ class UserController extends Controller
         $this->repository = $repository;
     }
 
+
     public function index()
     {
         dd('okey');
     }
 
-    protected function uploadFile(Request $request)
-    {
-        $filenameWithExt = $request->file('profile')->getClientOriginalName();
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        $filename = \hash('sha256', $filename . now()->timestamp);
-
-        $extension = $request->file('profile')->getClientOriginalExtension();
-        $fileNameToStore = $filename.'_'.time().'.'.$extension;
-
-        $path = $request->file('profile')->storeAs('images',$fileNameToStore);
-        return $fileNameToStore;
-    }
 
     public function store(StoreUserRequest $request)
     {
         $validated = $request->validated();
         $validated['password'] = Hash::make($validated['password']);
 
-
         if ($request->hasFile('profile')) {
-            $profile = $this->uploadFile($request);
-            $validated['profile'] = $profile;
+            $validated['profile'] = Helper::uploadImage($request, 'profile');
         }
 
         $token = $this->repository->create($validated)->createToken();
@@ -56,6 +43,7 @@ class UserController extends Controller
             message: 'Token generated successfully.'
         );
     }
+
 
     public function login(LoginUserRequest $request)
     {
