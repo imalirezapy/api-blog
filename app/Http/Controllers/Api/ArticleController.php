@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreArticleRequest;
@@ -30,10 +31,7 @@ class ArticleController extends Controller
     public function show(string $slug)
     {
         if (!$article = $this->repository->findSlug($slug)->get()) {
-            throw new HttpResponseException(response()->json([
-                'message' => 'Article not found',
-                'data' => [],
-            ], Response::HTTP_NOT_FOUND));
+            Helper::abortJson(Response::HTTP_NOT_FOUND);
         }
 
         return new ArticleResource($article);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\CategoryResource;
@@ -28,10 +29,7 @@ class CategoryController extends Controller
     {
         $category = $this->repository->findSlug($slug);
         if (!$category->get()) {
-            throw new HttpResponseException(response()->json([
-                'message' => 'Category not found',
-                'data' => [],
-            ], Response::HTTP_NOT_FOUND));
+            Helper::abortJson(Response::HTTP_NOT_FOUND);
         }
 
         return new ArticleCollection($category->articles());

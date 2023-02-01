@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
@@ -50,12 +51,10 @@ class UserController extends Controller
 
         $token = $this->repository->create($validated)->createToken();
 
-        return response()->json([
-            'message' => 'Token generated',
-            'data' => [
-                'token' => $token
-            ]
-        ], Response::HTTP_OK);
+        return Helper::responseJson(
+            data: ['token' => $token],
+            message: 'Token generated successfully.'
+        );
     }
 
     public function login(LoginUserRequest $request)
@@ -64,19 +63,12 @@ class UserController extends Controller
         $user = $this->repository->attempt($credentials, 'email');
 
         if (!$user->get()) {
-            throw new HttpResponseException(response()->json([
-                'message' => 'Validation errors',
-                'data' => [
-                    'email' => ['Email or Password is wrong!']
-                ],
-            ], Response::HTTP_BAD_REQUEST));
+            Helper::abortJson(Response::HTTP_BAD_REQUEST);
         }
 
-        return response()->json([
-            'message' => 'New Token generated.',
-            'data' => [
-                'token' => $user->createToken()
-            ]
-        ], Response::HTTP_OK);
+        return Helper::responseJson(
+            data: ['token' => $user->createToken()],
+            message: 'New Token generated.'
+        );
     }
 }
