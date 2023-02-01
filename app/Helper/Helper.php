@@ -7,25 +7,27 @@ use Illuminate\Support\Facades\Lang;
 
 class Helper
 {
-    static public function responseJson(string $data, $message = null)
+    static public function responseJson(array|string $data, string $message = null,int $code = 200)
     {
         $response = [
+            'message' => $message,
             'data' => $data
         ];
 
-        if (!is_null($message)) {
-            $response = array_merge( compact('message'), $response);
+        if (is_null($message)) {
+            unset($response['message']);
         }
 
-        return response()->json($response);
+        return response()->json($response, $code);
     }
 
-    static public function abortJson($code)
+    static public function abortJson(int $code)
     {
-        throw new HttpResponseException(response()->json([
-            'message' => __("status.{$code}.message"),
-            'data' => __("status.{$code}.data")
-        ], $code));
+        throw new HttpResponseException(static::responseJson(
+            __("status.{$code}.data"),
+            __("status.{$code}.message"),
+            $code
+        ));
     }
 
 }
