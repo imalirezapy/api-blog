@@ -13,15 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StoreArticleRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
     public function rules()
     {
         return [
@@ -36,6 +27,7 @@ class StoreArticleRequest extends FormRequest
             'category_id' => ['required', Rule::in(Category::all()->pluck('id'))],
         ];
     }
+
 
     public function failedValidation(Validator $validator)
     {

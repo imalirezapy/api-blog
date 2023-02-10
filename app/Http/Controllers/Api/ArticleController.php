@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\ArticleResource;
 use App\Interfaces\ArticleRepositoryInterface;
-use App\Models\Article;
-use App\Models\Category;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller
@@ -33,7 +28,7 @@ class ArticleController extends Controller
     public function show(string $slug)
     {
         if (!$article = $this->repository->findSlug($slug)->get()) {
-            Helper::abortJson(Response::HTTP_NOT_FOUND);
+            abortJson(Response::HTTP_NOT_FOUND);
         }
 
         return new ArticleResource($article);
@@ -47,7 +42,7 @@ class ArticleController extends Controller
         $category_id = $validated['category_id'];
         unset($validated['category_id']);
 
-        $validated['thumbnail'] = Helper::uploadImage($request, 'thumbnail');
+        $validated['thumbnail'] = uploadImage($request, 'thumbnail');
 
         $validated['likes'] = 0;
 

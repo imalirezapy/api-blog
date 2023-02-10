@@ -33,12 +33,12 @@ class UserController extends Controller
         $validated['password'] = Hash::make($validated['password']);
 
         if ($request->hasFile('profile')) {
-            $validated['profile'] = Helper::uploadImage($request, 'profile');
+            $validated['profile'] = uploadImage($request, 'profile');
         }
 
         $token = $this->repository->create($validated)->createToken();
 
-        return Helper::responseJson(
+        return responseJson(
             data: ['token' => $token],
             message: 'Token generated successfully.'
         );
@@ -51,10 +51,10 @@ class UserController extends Controller
         $user = $this->repository->attempt($credentials, 'email');
 
         if (!$user->get()) {
-            Helper::abortJson(Response::HTTP_BAD_REQUEST);
+            abortJson(Response::HTTP_BAD_REQUEST);
         }
 
-        return Helper::responseJson(
+        return responseJson(
             data: ['token' => $user->createToken()],
             message: 'New Token generated.'
         );

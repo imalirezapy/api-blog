@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\CategoryResource;
 use App\Interfaces\CategoryRepositoryInterface;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use function GuzzleHttp\Promise\all;
 
 class CategoryController extends Controller
 {
@@ -29,7 +25,7 @@ class CategoryController extends Controller
     {
         $category = $this->repository->findSlug($slug);
         if (!$category->get()) {
-            Helper::abortJson(Response::HTTP_NOT_FOUND);
+            abortJson(Response::HTTP_NOT_FOUND);
         }
 
         return new ArticleCollection($category->articles());

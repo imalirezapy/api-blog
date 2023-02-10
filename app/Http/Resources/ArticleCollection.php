@@ -21,7 +21,7 @@ class ArticleCollection extends ResourceCollection
                         $item->thumbnail :
                         env('app_url') . '/images/' . $item->thumbnail,
                     'likes' => $item->likes,
-                    'created_at' =>date_format($item->created_at, 'Y-d-m H:i:s'),
+                    'created_at' => $item->created_at,
                     'category' => $item->category()->first()->slug
                 ];
             })
