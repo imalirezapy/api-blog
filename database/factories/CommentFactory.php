@@ -19,8 +19,6 @@ class CommentFactory extends Factory
         return [
             'body'=> $this->faker->sentence(),
             'user_id'=> $this->faker->numberBetween(1,20),
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 }

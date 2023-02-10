@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\CommentRelations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Comment extends BaseModel
 {
-    use HasFactory;
+    use HasFactory, CommentRelations;
 
     protected $fillable = [
         'article_id',
@@ -15,18 +15,4 @@ class Comment extends Model
         'body',
         'parent_id',
     ];
-    public function article()
-    {
-        return $this->belongsTo(Article::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(CommentLike::class);
-    }
 }

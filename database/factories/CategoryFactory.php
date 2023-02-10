@@ -21,8 +21,6 @@ class CategoryFactory extends Factory
         return [
             'slug' => Str::slug($title),
             'title' => $title,
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 }

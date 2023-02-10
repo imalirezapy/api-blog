@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\ArticleRelations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Article extends Model
+class Article extends BaseModel
 {
-    use HasFactory;
+    use HasFactory, ArticleRelations;
 
     protected $fillable = [
         'slug',
@@ -16,19 +16,4 @@ class Article extends Model
         'thumbnail',
         'likes'
     ];
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class, 'article_id')->where('parent_id', null);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(ArticleLike::class, 'article_id');
-    }
 }

@@ -20,7 +20,8 @@ return new class extends Migration
             $table->text('body');
             $table->string('thumbnail');
             $table->integer('likes')->default(0);
-            $table->timestamps();
+            $table->timestamp('created_at');
+            $table->softDeletes();
         });
     }
 

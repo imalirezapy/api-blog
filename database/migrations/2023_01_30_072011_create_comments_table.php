@@ -30,7 +30,8 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();;
 
-            $table->timestamps();
+            $table->timestamp('created_at');
+            $table->softDeletes();
         });
     }
 

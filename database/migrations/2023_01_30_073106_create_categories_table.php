@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('slug', 70)->unique();
             $table->string('title', 120);
-            $table->timestamps();
+            $table->timestamp('created_at');
+            $table->softDeletes();
         });
     }
 
