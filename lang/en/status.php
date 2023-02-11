@@ -21,6 +21,10 @@ return [
         "message" => "Not Found",
         "data" => "The requested resource couldn't be found."
     ],
+    "405" => [
+        "message" => "Wrong request method.",
+        "data" => "The requested method is not supported for this route."
+    ],
     "500" => [
         "message" => "Internal Server Error",
         "data" => "Unexpected condition was encountered."

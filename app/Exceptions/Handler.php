@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -59,6 +60,8 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof NotFoundHttpException && $request->wantsJson()) {
             return abortJson(404);
+        } elseif ($e instanceof MethodNotAllowedHttpException && $request->wantsJson()) {
+            return abortJson(405, $e->getMessage());
         }
 
         return parent::render($request, $e);

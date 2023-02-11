@@ -20,10 +20,14 @@ function responseJson(array|string $data, string $message = null, int $code = 20
 }
 
 
-function abortJson(int $code)
+function abortJson(int $code, $data=null)
 {
+    if (is_null($data)) {
+        $data = __("status.{$code}.data");
+    }
+
     throw new HttpResponseException(responseJson(
-        __("status.{$code}.data"),
+        $data,
         __("status.{$code}.message"),
         $code
     ));
