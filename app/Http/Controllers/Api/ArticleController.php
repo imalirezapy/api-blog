@@ -11,6 +11,7 @@ use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\ArticleResource;
 use App\Interfaces\ArticleRepositoryInterface;
 use App\Models\Article;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -74,6 +75,7 @@ class ArticleController extends Controller
 
     public function delete($slug)
     {
+        $this->repository->deleteSlug($slug);
         return responseJson(['slug' => $slug], 'Article deleted successfully.');
     }
 }
