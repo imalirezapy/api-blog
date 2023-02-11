@@ -13,7 +13,7 @@ class CommentResource extends JsonResource
             'body' => $this['body'],
             'childes' => ($this['childes'] ?? false) ?
                 $this::collection($this['childes']) :
-                $this['childes_count'],
+                ($this['childes_count'] ?? 0),
             'created_at' => $this['created_at'],
         ];
     }

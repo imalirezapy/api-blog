@@ -46,4 +46,15 @@ class CommentRepository implements CommentRepositoryInterface
     {
         return (bool) Comment::where('id', $id)->delete();
     }
+
+    public function update(int $id, array $data): array
+    {
+        $article = Comment::whereId($id)
+            ->with('childes')
+            ->first();
+
+        $article->update($data);
+
+        return  $article->toArray();
+    }
 }

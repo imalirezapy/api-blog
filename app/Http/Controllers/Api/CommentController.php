@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Interfaces\CommentRepositoryInterface;
 use Illuminate\Http\Request;
@@ -41,5 +42,17 @@ class CommentController extends Controller
         }
         $this->repository->delete($id);
         return responseJson(['id' => $id], 'Comment deleted successfully.');
+    }
+
+    public function update(UpdateCommentRequest $request, $id)
+    {
+        if (!$this->repository->belongsToUser($id)) {
+            abortJson(404);
+        }
+
+        return new CommentResource($this
+            ->repository
+            ->update($id, ['body' => $request->body])
+        );
     }
 }

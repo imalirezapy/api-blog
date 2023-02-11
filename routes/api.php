@@ -30,8 +30,9 @@ Route::group(['middleware' => ['auth:sanctum', 'article_exists', 'category_exist
     Route::get('/categories/{categorySlug}', [CategoryController::class, 'show']);
 
     Route::get('/comments/{commentId}', [CommentController::class, 'show']);
-    Route::delete('/comments/{commentId}/delete', [CommentController::class, 'destroy']);
     Route::post('/articles/{articleSlug}/comments/store', [CommentController::class, 'store']);
+    Route::put('/comments/{commentId}/update', [CommentController::class, 'update']);
+    Route::delete('/comments/{commentId}/delete', [CommentController::class, 'destroy']);
 
     Route::group(['middleware' => ['admin']], function () {
         Route::post('/articles/store', [AdminArticleController::class, 'store']);
