@@ -1,0 +1,678 @@
+{
+	"info": {
+		"_postman_id": "0e2321db-50ef-486a-a0e5-430b787db9fe",
+		"name": "api-blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22543614"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "example@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "example@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "fname",
+									"value": "ali",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lname",
+									"value": "mousavi",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "profile",
+									"type": "file",
+									"src": "/C:/Users/ali/Desktop/download.jpg",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Article",
+					"item": [
+						{
+							"name": "store",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "slug",
+											"value": "my-article-1",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "my article title 1",
+											"type": "text"
+										},
+										{
+											"key": "body",
+											"value": "something thing for body",
+											"type": "text"
+										},
+										{
+											"key": "thumbnail",
+											"type": "file",
+											"src": "/C:/Users/alireza/Desktop/-/FMeg4iJXoAQ6yr3.jpg"
+										},
+										{
+											"key": "category_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/articles/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"articles",
+										"store"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "slug",
+											"value": "my-article-1",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "my new article title ",
+											"type": "text"
+										},
+										{
+											"key": "body",
+											"value": "something thing for body",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "thumbnail",
+											"type": "file",
+											"src": [],
+											"disabled": true
+										},
+										{
+											"key": "category_id",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "_method",
+											"value": "PUT",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/articles/my-article-1/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"articles",
+										"my-article-1",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/articles/my-article-1/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"articles",
+										"my-article-1",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "store",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "slug",
+											"value": "my-category-1",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "my category title 1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/categories/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"store"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "slug",
+											"value": "my-new-slug-1",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "my new title 1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/categories/my-category-1/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"my-category-1",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/categories/my-category-1/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"my-category-1",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Article",
+					"item": [
+						{
+							"name": "like",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/articles/my-article-1/like",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"articles",
+										"my-article-1",
+										"like"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "single",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/articles/my-article-1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"articles",
+										"my-article-1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "all",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/articles?search=u",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"articles"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "u"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "all",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/my-category-1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"my-category-1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Comment",
+					"item": [
+						{
+							"name": "store",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "body",
+											"value": "something",
+											"type": "text"
+										},
+										{
+											"key": "parent_id",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/articles/my-article-1/comments/store",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"articles",
+										"my-article-1",
+										"comments",
+										"store"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "body",
+											"value": "new edited body",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/comments/10/update",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"comments",
+										"10",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "single",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/comments/10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"comments",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/comments/10/delete",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"comments",
+										"10",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "1|c0so4oOR684xs3bvmiTZZvsAkzxVQFSZVbKmAXDX",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add({",
+					"    key: \"Accept\",",
+					"    value: \"application/json\"",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		}
+	]
+}
