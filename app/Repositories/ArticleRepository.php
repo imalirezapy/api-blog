@@ -67,4 +67,21 @@ class ArticleRepository implements ArticleRepositoryInterface
         $article['comments'] = [];
         return (object) $article;
     }
+
+    public function existsSlug(string $slug): bool
+    {
+        return (bool) Article::whereSlug($slug)->first();
+    }
+    public function update(string $slug, array $data): object
+    {
+        $article = Article::whereSlug($slug)->with('category')
+            ->with(['comments' => function ($builder) {
+                $builder->where('parent_id', null)
+                    ->withCount('childes');
+            }])->first();
+
+        $article->update($data);
+
+        return (object) $article;
+    }
 }

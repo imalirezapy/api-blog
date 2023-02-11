@@ -3,15 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Models\Category;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
-use Illuminate\Validation\Rules\Password;
-use Symfony\Component\HttpFoundation\Response;
 
-class StoreArticleRequest extends FormRequest
+class StoreArticleRequest extends BaseFormRequest
 {
     public function rules()
     {
@@ -26,14 +21,5 @@ class StoreArticleRequest extends FormRequest
             ],
             'category_id' => ['required', Rule::in(Category::all()->pluck('id'))],
         ];
-    }
-
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'message' => 'Validation errors',
-            'data' => $validator->errors(),
-        ], Response::HTTP_BAD_REQUEST));
     }
 }

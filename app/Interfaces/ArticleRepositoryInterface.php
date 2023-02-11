@@ -16,4 +16,7 @@ interface ArticleRepositoryInterface
 
     public function create(int $category_id, array $details): object;
 
+    public function update(string $slug, array $data): object;
+
+    public function existsSlug(string $slug): bool;
 }

@@ -2,17 +2,11 @@
 
 namespace App\Http\Requests;
 
-
-
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use \Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rules\Password;
 
-class StoreUserRequest extends FormRequest
+class StoreUserRequest extends BaseFormRequest
 {
 
     public function rules()
@@ -28,14 +22,5 @@ class StoreUserRequest extends FormRequest
                     ->dimensions(Rule::dimensions()->maxHeight(1000)->maxWidth(1000))
             ]
         ];
-    }
-
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'message' => 'Validation errors',
-            'data' => $validator->errors(),
-        ], Response::HTTP_BAD_REQUEST));
     }
 }

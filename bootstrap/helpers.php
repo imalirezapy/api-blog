@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 function responseJson(array|string $data, string $message = null, int $code = 200)
@@ -41,4 +42,15 @@ function uploadImage(Request $request, string $key)
     $request->file($key)->storeAs('images',$fileNameToStore);
 
     return $fileNameToStore;
+}
+
+
+function deleteImage(string $path)
+{
+    $path = 'images/' . $path;
+    if (Storage::exists($path)) {
+        Storage::delete($path);
+        return true;
+    }
+    return false;
 }
