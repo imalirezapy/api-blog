@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Admin\AdminArticleController;
 use App\Http\Controllers\Api\Admin\AdminCategoryController;
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,8 @@ Route::group(['middleware' => ['auth:sanctum', 'article_exists', 'category_exist
 
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{categorySlug}', [CategoryController::class, 'show']);
+
+    Route::post('/articles/{articleSlug}/comments/store', [CommentController::class, 'store']);
 
     Route::group(['middleware' => ['admin']], function () {
         Route::post('/articles/store', [AdminArticleController::class, 'store']);
