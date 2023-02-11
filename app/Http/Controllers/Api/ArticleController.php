@@ -78,4 +78,12 @@ class ArticleController extends Controller
         $this->repository->deleteSlug($slug);
         return responseJson(['slug' => $slug], 'Article deleted successfully.');
     }
+    public function like(Request $request, $slug)
+    {
+        $like  = $this->repository->like($slug, $request->user()->id);
+
+        $message = empty($like['detached']) ? 'liked.' : 'unliked.';
+
+        return responseJson(['slug' => $slug], $message);
+    }
 }

@@ -89,4 +89,12 @@ class ArticleRepository implements ArticleRepositoryInterface
     {
         return (bool) Article::whereSlug($slug)->first()->delete();
     }
+
+    public function like(string $slug, int $userId): array
+    {
+        $like = Article::whereSlug($slug)->first()->likes()->toggle([
+            'user_id' => $userId
+        ]);
+        return $like;
+    }
 }
