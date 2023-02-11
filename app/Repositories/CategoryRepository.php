@@ -30,10 +30,6 @@ class CategoryRepository implements CategoryRepositoryInterface
         return  Category::whereSlug($slug)->first()->toArray();
     }
 
-    public function delete(): bool
-    {
-        return $this->category->delete();
-    }
 
     public function create(array $details): array
     {
@@ -56,5 +52,11 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function existsSlug(string $slug): bool
     {
         return (bool) Category::whereSlug($slug)->first();
+    }
+
+    public function deleteSlug(string $slug): bool
+    {
+        return (bool) Category::whereSlug($slug)->first()->delete();
+
     }
 }

@@ -29,8 +29,9 @@ class AdminCategoryController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $this->repository->deleteSlug($slug);
+        return responseJson(['slug' => $slug], 'Category deleted successfully.');
     }
 }
