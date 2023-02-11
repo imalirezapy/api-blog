@@ -9,70 +9,63 @@ use App\Models\Category;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
-    public function Search(int|string $needle, bool $pagination = true, int $pages = 10): object
+    public function Search(int|string $needle, bool $pagination = true, int $pages = 10): array
     {
-        $articles = Article::where('title','LIKE', '%'.urldecode($needle).'%');
+        $articles = Article::where('title','LIKE', '%'.urldecode($needle).'%')->with('category');
 
         if ($pagination) {
             $articles = $articles->paginate($pages)->withQueryString();
         }
 
-        return (object) $articles;
+        return  $articles->toArray();
     }
 
-    public function all(bool $pagination = true, int $pages = 10): object
+    public function all(bool $pagination = true, int $pages = 10): array
     {
-        $articles = Article::orderBy('id', 'desc');
+        $articles = Article::orderBy('id', 'desc')->with('category');
 
         if ($pagination) {
             $articles = $articles->paginate($pages)->withQueryString();
         }
 
-        return (object) $articles;
+        return  $articles->toArray();
     }
 
-    public function findId(int $id): object
-    {
-        $article = Article::whereId($id)
-            ->with('category')
-            ->with(['comments' => function ($builder) {
-                $builder->where('parent_id', null)
-                    ->withCount('childes');
-            }])
-            ->first()
-            ?->toArray();
 
-        return (object) $article;
-    }
-
-    public function findSlug(string $slug): object
+    public function findSlug(string|null $slug): array
     {
+        if (is_null($slug)) {
+            return [];
+        }
         $article = Article::whereSlug($slug)
             ->with('category')
             ->with(['comments' => function ($builder) {
                 $builder->where('parent_id', null)
                 ->withCount('childes');
             }])
-            ->first()
-            ?->toArray();
+            ->first()->toArray();
 
-        return (object) $article;
+        return  $article;
     }
 
-    public function create(int $category_id, array $details): object
+
+    public function create(int $category_id, array $details): array
     {
-        $category = (object) Category::find($category_id);
+        $category =  Category::find($category_id);
         $article = $category->articles()->create($details)->toArray();
         $article['category'] = $category->toArray();
         $article['comments'] = [];
-        return (object) $article;
+        return  $article;
     }
+
 
     public function existsSlug(string $slug): bool
     {
         return (bool) Article::whereSlug($slug)->first();
     }
-    public function update(string $slug, array $data): object
+
+
+    public function update(string $slug, array $data): array
     {
         $article = Article::whereSlug($slug)->with('category')
             ->with(['comments' => function ($builder) {
@@ -82,8 +75,9 @@ class ArticleRepository implements ArticleRepositoryInterface
 
         $article->update($data);
 
-        return (object) $article;
+        return  $article->toArray();
     }
+
 
     public function deleteSlug(string $slug): bool
     {

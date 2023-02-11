@@ -35,9 +35,10 @@ class AdminArticleController extends Controller
         $validated = $request->validated();
 
         $article = $this->repository->findSlug($request->slug);
-
-        $validated['thumbnail'] = uploadImage($request, 'thumbnail');
-        deleteImage($article->thumbnail);
+        if ($request->has('thumbnail')) {
+            $validated['thumbnail'] = uploadImage($request, 'thumbnail');
+            deleteImage($article['thumbnail']);
+        }
 
         $article = $this->repository->update($slug, $validated);
 

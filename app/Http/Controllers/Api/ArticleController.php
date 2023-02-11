@@ -18,14 +18,15 @@ class ArticleController extends Controller
 
     public function index()
     {
-
         if ($value = request()->query('search')) {
             $articles = $this->repository->search($value);
         } else {
             $articles = $this->repository->all();
         }
 
-        return  new ArticleCollection($articles);
+        $articles['data'] = ArticleCollection::collection($articles['data'])->toArray(true);
+
+        return $articles;
     }
 
 

@@ -2,29 +2,24 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
-class ArticleCollection extends ResourceCollection
+class ArticleCollection extends JsonResource
 {
 
     public function toArray($request)
     {
-
         return [
-            'data' => $this->collection->map(function ($item) {
-                return [
-                    'slug' => $item->slug,
-                    'title' => $item->title,
-                    'body' => $item->body,
-                    'thumbnail' => Str::startsWith($item->thumbnail, 'http') ?
-                        $item->thumbnail :
-                        env('app_url') . '/images/' . $item->thumbnail,
-                    'likes' => $item->likes,
-                    'created_at' => $item->created_at,
-                    'category' => new CategoryResource($item->category)
-                ];
-            })
+            'slug' => $this['slug'],
+            'title' => $this['title'],
+            'body' => $this['body'],
+            'thumbnail' => Str::startsWith($this['thumbnail'], 'http') ?
+                $this['thumbnail'] :
+                env('app_url') . '/images/' . $this['thumbnail'],
+            'likes' => $this['likes'],
+            'created_at' => $this['created_at'],
+            'category' => new CategoryCollection($this['category'])
         ];
     }
 }

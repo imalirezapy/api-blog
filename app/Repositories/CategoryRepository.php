@@ -9,14 +9,18 @@ use App\Models\Category;
 class CategoryRepository implements CategoryRepositoryInterface
 {
     public Category|null $category;
-    public function all()
+    public function all(): array
     {
-        return Category::all();
+        return Category::all()->toArray();
     }
 
-    public function articles()
+    public function withArticles(string $slug): array
     {
-        return $this->category->articles()->get();
+        return Category::whereSlug($slug)
+            ->with(['articles' => function ($builder) {
+                $builder->with('category');
+            }])
+            ->first()->toArray();
     }
 
     public function findId(int $id): self
@@ -39,7 +43,9 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function create(array $details): array
     {
-        return Category::create($details)->toArray();
+        $category = Category::create($details)->toArray();
+        $category['articles'] = [];
+        return $category;
     }
 
     public function update(array $details): self

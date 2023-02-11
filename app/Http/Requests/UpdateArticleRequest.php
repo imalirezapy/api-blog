@@ -23,7 +23,7 @@ class UpdateArticleRequest extends BaseFormRequest
                 'max:60',
                 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 'exists:articles',
-                'unique:articles,slug,' . $repository->findSlug($this->route('slug'))->id,
+                'unique:articles,slug,' . ($repository->findSlug($this->route('slug'))['id'] ?? ''),
                 ],
             'title' => ['string', 'min:3', 'max:60'],
             'body' => ['string'],
