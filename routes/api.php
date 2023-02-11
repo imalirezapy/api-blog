@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AdminArticleController;
+use App\Http\Controllers\Api\Admin\AdminCategoryController;
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +29,10 @@ Route::group(['middleware' => ['auth:sanctum', 'article_exists']], function () {
     Route::get('/categories/{categorySlug}', [CategoryController::class, 'show']);
 
     Route::group(['middleware' => ['admin']], function () {
-        Route::post('/articles/store', [ArticleController::class, 'store']);
-        Route::put('/articles/{articleSlug}/edit', [ArticleController::class, 'update']);
-        Route::delete('/articles/{articleSlug}/delete', [ArticleController::class, 'delete']);
+        Route::post('/articles/store', [AdminArticleController::class, 'store']);
+        Route::put('/articles/{articleSlug}/update', [AdminArticleController::class, 'update']);
+        Route::delete('/articles/{articleSlug}/delete', [AdminArticleController::class, 'destroy']);
+
+        Route::post('/categories/store', [AdminCategoryController::class, 'store']);
     });
 });

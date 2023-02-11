@@ -37,10 +37,9 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $this->category->delete();
     }
 
-    public function create(array $details): self
+    public function create(array $details): array
     {
-        $this->category = Category::create($details);
-        return $this;
+        return Category::create($details)->toArray();
     }
 
     public function update(array $details): self

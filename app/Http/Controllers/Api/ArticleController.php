@@ -4,16 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Controllers\FileController;
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\ArticleResource;
 use App\Interfaces\ArticleRepositoryInterface;
-use App\Models\Article;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller
 {
@@ -43,41 +37,6 @@ class ArticleController extends Controller
     }
 
 
-    public function store(StoreArticleRequest $request)
-    {
-        $validated = $request->validated();
-
-        $category_id = $validated['category_id'];
-        unset($validated['category_id']);
-
-        $validated['thumbnail'] = uploadImage($request, 'thumbnail');
-
-        $validated['likes'] = 0;
-
-        $article = $this->repository->create($category_id, $validated);
-        return (new ArticleResource($article));
-    }
-
-    public function update(UpdateArticleRequest $request, $slug)
-    {
-
-        $validated = $request->validated();
-
-        $article = $this->repository->findSlug($request->slug);
-
-        $validated['thumbnail'] = uploadImage($request, 'thumbnail');
-        deleteImage($article->thumbnail);
-
-        $article = $this->repository->update($slug, $validated);
-
-        return (new ArticleResource($article));
-    }
-
-    public function delete($slug)
-    {
-        $this->repository->deleteSlug($slug);
-        return responseJson(['slug' => $slug], 'Article deleted successfully.');
-    }
     public function like(Request $request, $slug)
     {
         $like  = $this->repository->like($slug, $request->user()->id);
