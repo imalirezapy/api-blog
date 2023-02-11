@@ -9,53 +9,54 @@ use App\Models\Category;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
-    public Article|null $article;
-    public function all(bool $pagination = false, int $pages = 10)
+    public function Search(int|string $needle, bool $pagination = true, int $pages = 10): object
     {
-        if ($value = request()->query('search')) {
-            $articles = Article::where('title','LIKE', '%'.urldecode($value).'%');
-        }else{
-            $articles = Article::orderBy('id', 'desc');
-        };
+        $articles = Article::where('title','LIKE', '%'.urldecode($needle).'%');
+
         if ($pagination) {
             $articles = $articles->paginate($pages)->withQueryString();
         }
 
-        return $articles;
+        return (object) $articles;
     }
 
-    public function findId(int $id): self
+    public function all(bool $pagination = true, int $pages = 10): object
     {
-        $this->article = Article::find($id);
+        $articles = Article::orderBy('id', 'desc');
 
-        return $this;
+        if ($pagination) {
+            $articles = $articles->paginate($pages)->withQueryString();
+        }
+
+        return (object) $articles;
     }
 
-    public function findSlug(string $slug): self
+    public function findId(int $id): object
     {
-        $this->article = Article::whereSlug($slug)->first();
-        return $this;
+
+        return (object) Article::findOrFail($id)->toArray();
     }
 
-    public function delete(): bool
+    public function findSlug(string $slug): object
     {
-        return $this->article->delete();
+        $article = Article::whereSlug($slug)
+            ->with('category')
+            ->with(['comments' => function ($builder) {
+                $builder->where('parent_id', null)
+                ->withCount('childes');
+            }])
+            ->firstOrFail()
+            ?->toArray();
+
+        return (object) $article;
     }
 
-    public function create(int $category_id, array $details): self
+    public function create(int $category_id, array $details): object
     {
-        $this->article = Category::find($category_id)->articles()->create($details);
-        return $this;
-    }
-
-    public function update(array $details): self
-    {
-        $this->article = $this->article->update($details) ?? null;
-        return $this;
-    }
-
-    public function get()
-    {
-        return $this->article;
+        $category = (object) Category::find($category_id);
+        $article = $category->articles()->create($details)->toArray();
+        $article['category'] = $category->toArray();
+        $article['comments'] = [];
+        return (object) $article;
     }
 }

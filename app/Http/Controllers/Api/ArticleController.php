@@ -12,22 +12,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller
 {
-    private $repository;
-    public function __construct(ArticleRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
+    public function __construct(
+        private ArticleRepositoryInterface $repository
+    ) { }
 
 
     public function index()
     {
-        return  new ArticleCollection($this->repository->all(true));
+
+        if ($value = request()->query('search')) {
+            $articles = $this->repository->search($value);
+        } else {
+            $articles = $this->repository->all();
+        }
+
+        return  new ArticleCollection($articles);
     }
 
 
     public function show(string $slug)
     {
-        if (!$article = $this->repository->findSlug($slug)->get()) {
+        if (!$article = $this->repository->findSlug($slug)) {
             abortJson(Response::HTTP_NOT_FOUND);
         }
 
@@ -46,8 +51,7 @@ class ArticleController extends Controller
 
         $validated['likes'] = 0;
 
-        $article = $this->repository->create($category_id, $validated)->get();
-
+        $article = $this->repository->create($category_id, $validated);
         return (new ArticleResource($article));
     }
 

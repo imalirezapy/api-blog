@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Article;
+use App\Models\Comment;
 use App\Models\User;
 
 trait CommentRelations
@@ -19,6 +20,11 @@ trait CommentRelations
 
     public function likes()
     {
-        return $this->hasMany(CommentLike::class);
+        return $this->belongsToMany(User::class, 'comment_likes');
+    }
+
+    public function childes()
+    {
+        return $this->hasMany(Comment::class, 'parent_id', 'id');
     }
 }

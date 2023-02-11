@@ -22,7 +22,7 @@ class ArticleCollection extends ResourceCollection
                         env('app_url') . '/images/' . $item->thumbnail,
                     'likes' => $item->likes,
                     'created_at' => $item->created_at,
-                    'category' => $item->category()->first()->slug
+                    'category' => new CategoryResource($item->category)
                 ];
             })
         ];
