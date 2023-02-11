@@ -33,8 +33,16 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function findId(int $id): object
     {
+        $article = Article::whereId($id)
+            ->with('category')
+            ->with(['comments' => function ($builder) {
+                $builder->where('parent_id', null)
+                    ->withCount('childes');
+            }])
+            ->first()
+            ?->toArray();
 
-        return (object) Article::findOrFail($id)->toArray();
+        return (object) $article;
     }
 
     public function findSlug(string $slug): object
@@ -45,7 +53,7 @@ class ArticleRepository implements ArticleRepositoryInterface
                 $builder->where('parent_id', null)
                 ->withCount('childes');
             }])
-            ->firstOrFail()
+            ->first()
             ?->toArray();
 
         return (object) $article;
