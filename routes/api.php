@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::group(['middleware' => ['auth:sanctum', 'article_exists']], function () {
     Route::get('/articles', [ArticleController::class, 'index']);
     Route::get('/articles/{slug}', [ArticleController::class, 'show']);
     Route::post('/articles/{slug}/like', [ArticleController::class, 'like']);
@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
-    Route::group(['middleware' => ['admin', 'article_exists']],function () {
+    Route::group(['middleware' => ['admin']], function () {
         Route::post('/articles/store', [ArticleController::class, 'store']);
         Route::put('/articles/{slug}/edit', [ArticleController::class, 'update']);
         Route::delete('/articles/{slug}/delete', [ArticleController::class, 'delete']);
