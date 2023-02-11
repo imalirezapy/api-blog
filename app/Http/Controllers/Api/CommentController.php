@@ -22,4 +22,15 @@ class CommentController extends Controller
                 $request->toArray() + ['user_id' => $request->user()->id])
         );
     }
+
+    public function show($id)
+    {
+        if (!$comment = $this->repository->find($id)) {
+            abortJson(404);
+        }
+
+        return new CommentResource(
+            $comment
+        );
+    }
 }

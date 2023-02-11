@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth:sanctum', 'article_exists', 'category_exist
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{categorySlug}', [CategoryController::class, 'show']);
 
+    Route::get('/comments/{commentId}', [CommentController::class, 'show']);
     Route::post('/articles/{articleSlug}/comments/store', [CommentController::class, 'store']);
 
     Route::group(['middleware' => ['admin']], function () {

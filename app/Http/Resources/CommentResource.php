@@ -11,7 +11,9 @@ class CommentResource extends JsonResource
         return [
             'id' => $this['id'],
             'body' => $this['body'],
-            'childes_count' => $this['childes_count'],
+            'childes' => ($this['childes'] ?? false) ?
+                $this::collection($this['childes']) :
+                $this['childes_count'],
             'created_at' => $this['created_at'],
         ];
     }

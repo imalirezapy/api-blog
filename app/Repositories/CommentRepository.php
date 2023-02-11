@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\CommentRepositoryInterface;
 use App\Models\Article;
+use App\Models\Comment;
 
 class CommentRepository implements CommentRepositoryInterface
 {
@@ -17,5 +18,14 @@ class CommentRepository implements CommentRepositoryInterface
         $comment['childes_count'] = 0;
 
         return $comment;
+    }
+
+    public function find(int $id): array|null
+    {
+        return Comment::where('id', $id)
+            ->with(['childes' => function ($builder) {
+                $builder->withCount('childes');
+            }])
+            ->first()?->toArray();
     }
 }

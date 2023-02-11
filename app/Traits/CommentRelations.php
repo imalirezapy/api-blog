@@ -18,11 +18,6 @@ trait CommentRelations
         return $this->belongsTo(User::class);
     }
 
-    public function likes()
-    {
-        return $this->belongsToMany(User::class, 'comment_likes');
-    }
-
     public function childes()
     {
         return $this->hasMany(Comment::class, 'parent_id', 'id');
