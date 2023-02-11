@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
-    Route::middleware('auth.admin')->group(function () {
+    Route::middleware('admin')->group(function () {
         Route::post('/article/store', [ArticleController::class, 'store']);
     });
 });
