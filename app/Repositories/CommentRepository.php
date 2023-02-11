@@ -8,7 +8,7 @@ use App\Models\Comment;
 
 class CommentRepository implements CommentRepositoryInterface
 {
-    public function create(string $articleSlug, array $data)
+    public function create(string $articleSlug, array $data): array
     {
         $comment = Article::whereSlug($articleSlug)
             ->first()
