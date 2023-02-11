@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [UserController::class, 'store']);
 Route::post('/login', [UserController::class, 'login']);
 
-Route::group(['middleware' => ['auth:sanctum', 'article_exists']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'article_exists', 'category_exists']], function () {
     Route::get('/articles', [ArticleController::class, 'index']);
     Route::get('/articles/{articleSlug}', [ArticleController::class, 'show']);
     Route::post('/articles/{articleSlug}/like', [ArticleController::class, 'like']);

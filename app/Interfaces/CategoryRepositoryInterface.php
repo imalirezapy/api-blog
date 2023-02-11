@@ -10,4 +10,5 @@ interface CategoryRepositoryInterface
     public function delete(): bool;
     public function create(array $details): array;
     public function update(string $slug, array $details): array;
+    public function existsSlug(string $slug): bool;
 }

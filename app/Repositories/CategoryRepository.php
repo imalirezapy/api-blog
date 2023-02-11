@@ -52,4 +52,9 @@ class CategoryRepository implements CategoryRepositoryInterface
         $category->update($details);
         return $category->toArray();
     }
+
+    public function existsSlug(string $slug): bool
+    {
+        return (bool) Category::whereSlug($slug)->first();
+    }
 }
