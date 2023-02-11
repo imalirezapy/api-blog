@@ -28,4 +28,22 @@ class CommentRepository implements CommentRepositoryInterface
             }])
             ->first()?->toArray();
     }
+
+    public function belongsToUser(int $id): bool
+    {
+        return in_array(
+            $id,
+            request()
+                ->user()
+                ->comments()
+                ->get()
+                ->pluck('id')
+                ->toArray()
+        );
+    }
+
+    public function delete($id): bool
+    {
+        return (bool) Comment::where('id', $id)->delete();
+    }
 }

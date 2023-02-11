@@ -33,4 +33,13 @@ class CommentController extends Controller
             $comment
         );
     }
+
+    public function destroy($id)
+    {
+        if (!$this->repository->belongsToUser($id)) {
+            abortJson(404);
+        }
+        $this->repository->delete($id);
+        return responseJson(['id' => $id], 'Comment deleted successfully.');
+    }
 }
