@@ -21,15 +21,15 @@ Route::post('/login', [UserController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum', 'article_exists']], function () {
     Route::get('/articles', [ArticleController::class, 'index']);
-    Route::get('/articles/{slug}', [ArticleController::class, 'show']);
-    Route::post('/articles/{slug}/like', [ArticleController::class, 'like']);
+    Route::get('/articles/{articleSlug}', [ArticleController::class, 'show']);
+    Route::post('/articles/{articleSlug}/like', [ArticleController::class, 'like']);
 
     Route::get('/categories', [CategoryController::class, 'index']);
-    Route::get('/categories/{slug}', [CategoryController::class, 'show']);
+    Route::get('/categories/{categorySlug}', [CategoryController::class, 'show']);
 
     Route::group(['middleware' => ['admin']], function () {
         Route::post('/articles/store', [ArticleController::class, 'store']);
-        Route::put('/articles/{slug}/edit', [ArticleController::class, 'update']);
-        Route::delete('/articles/{slug}/delete', [ArticleController::class, 'delete']);
+        Route::put('/articles/{articleSlug}/edit', [ArticleController::class, 'update']);
+        Route::delete('/articles/{articleSlug}/delete', [ArticleController::class, 'delete']);
     });
 });

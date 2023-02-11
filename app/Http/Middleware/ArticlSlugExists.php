@@ -15,7 +15,7 @@ class ArticlSlugExists
          */
         $articleRepository = resolve(ArticleRepositoryInterface::class);
 
-        if (!is_null($slug = $request->route('slug'))) {
+        if (!is_null($slug = $request->route('articleSlug'))) {
             if (!$articleRepository->existsSlug($slug)) {
                 abortJson(404);
             }
