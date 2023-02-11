@@ -34,6 +34,6 @@ Route::group(['middleware' => ['auth:sanctum', 'article_exists']], function () {
         Route::delete('/articles/{articleSlug}/delete', [AdminArticleController::class, 'destroy']);
 
         Route::post('/categories/store', [AdminCategoryController::class, 'store']);
-        Route::post('/categories/{categorySlug}/update', [AdminCategoryController::class, 'update']);
+        Route::put('/categories/{categorySlug}/update', [AdminCategoryController::class, 'update']);
     });
 });
