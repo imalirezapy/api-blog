@@ -36,9 +36,7 @@ class ArticleController extends Controller
 
     public function show(string $slug)
     {
-        if (!$article = $this->repository->findSlug($slug)) {
-            abortJson(Response::HTTP_NOT_FOUND);
-        }
+        $article = $this->repository->findSlug($slug);
 
         return new ArticleResource($article);
     }
@@ -61,9 +59,6 @@ class ArticleController extends Controller
 
     public function update(UpdateArticleRequest $request, $slug)
     {
-        if (!$this->repository->existsSlug($slug)) {
-            abortJson(404);
-        }
 
         $validated = $request->validated();
 
@@ -75,5 +70,10 @@ class ArticleController extends Controller
         $article = $this->repository->update($slug, $validated);
 
         return (new ArticleResource($article));
+    }
+
+    public function delete($slug)
+    {
+        return responseJson(['slug' => $slug], 'Article deleted successfully.');
     }
 }

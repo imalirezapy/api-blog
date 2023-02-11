@@ -19,4 +19,6 @@ interface ArticleRepositoryInterface
     public function update(string $slug, array $data): object;
 
     public function existsSlug(string $slug): bool;
+
+    public function deleteSlug(string $slug): bool;
 }

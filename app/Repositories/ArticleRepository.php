@@ -84,4 +84,9 @@ class ArticleRepository implements ArticleRepositoryInterface
 
         return (object) $article;
     }
+
+    public function deleteSlug(string $slug): bool
+    {
+        return (bool) Article::whereSlug($slug)->first()->delete();
+    }
 }

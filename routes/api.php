@@ -26,8 +26,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
-    Route::middleware('admin')->group(function () {
+    Route::group(['middleware' => ['admin', 'article_exists']],function () {
         Route::post('/articles/store', [ArticleController::class, 'store']);
         Route::put('/articles/{slug}/edit', [ArticleController::class, 'update']);
+        Route::delete('/articles/{slug}/delete', [ArticleController::class, 'delete']);
     });
 });
