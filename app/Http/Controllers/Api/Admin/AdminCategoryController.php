@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
@@ -22,15 +23,9 @@ class AdminCategoryController extends Controller
     }
 
 
-    public function edit($id)
+    public function update(UpdateCategoryRequest $request, $slug)
     {
-        //
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        //
+        return new CategoryResource($this->repository->update($slug, $request->toArray()));
     }
 
 

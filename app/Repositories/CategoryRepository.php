@@ -8,7 +8,6 @@ use App\Models\Category;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
-    public Category|null $category;
     public function all(): array
     {
         return Category::all()->toArray();
@@ -23,17 +22,12 @@ class CategoryRepository implements CategoryRepositoryInterface
             ->first()->toArray();
     }
 
-    public function findId(int $id): self
+    public function findSlug(string|null $slug): array
     {
-        $this->category = Category::find($id);
-
-        return $this;
-    }
-
-    public function findSlug(string $slug): self
-    {
-        $this->category = Category::whereSlug($slug)->first();
-        return $this;
+        if (is_null($slug)) {
+            return [];
+        }
+        return  Category::whereSlug($slug)->first()->toArray();
     }
 
     public function delete(): bool
@@ -48,14 +42,14 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $category;
     }
 
-    public function update(array $details): self
+    public function update(string $slug, array $details): array
     {
-        $this->category = $this->category->update($details) ?? null;
-        return $this;
-    }
-
-    public function get()
-    {
-        return $this->category;
+        $category = Category::whereSlug($slug)
+            ->with(['articles' => function ($builder) {
+                $builder->with('category');
+            }])
+            ->first();
+        $category->update($details);
+        return $category->toArray();
     }
 }
