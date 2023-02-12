@@ -44,6 +44,9 @@ class ArticleController extends Controller
 
         $message = empty($like['detached']) ? 'liked.' : 'unliked.';
 
-        return responseJson(['slug' => $slug], $message);
+        return responseJson([
+            'slug' => $slug,
+            'likes' => $like['likes']
+        ], $message);
     }
 }

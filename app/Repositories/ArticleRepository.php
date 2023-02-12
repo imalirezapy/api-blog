@@ -86,9 +86,14 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function like(string $slug, int $userId): array
     {
-        $like = Article::whereSlug($slug)->first()->likes()->toggle([
+        $article = Article::whereSlug($slug)->first();
+        $like = $article->likes()->toggle([
             'user_id' => $userId
         ]);
-        return $like;
+
+        $article->update([
+            'likes' => $likes = $article->likes()->count()
+        ]);
+        return $like + ['likes' => $likes];
     }
 }
