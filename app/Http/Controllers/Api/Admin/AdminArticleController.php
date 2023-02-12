@@ -26,7 +26,9 @@ class AdminArticleController extends Controller
         $validated['likes'] = 0;
 
         $article = $this->repository->create($category_id, $validated);
-        return (new ArticleResource($article));
+        return (new ArticleResource($article))
+            ->response()
+            ->setStatusCode(201);
     }
 
     public function update(UpdateArticleRequest $request, $slug)
@@ -48,6 +50,6 @@ class AdminArticleController extends Controller
     public function destroy($slug)
     {
         $this->repository->deleteSlug($slug);
-        return responseJson(['slug' => $slug], 'Article deleted successfully.');
+        return responseJson([], '', 204);
     }
 }

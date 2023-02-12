@@ -42,11 +42,17 @@ class ArticleController extends Controller
     {
         $like  = $this->repository->like($slug, $request->user()->id);
 
-        $message = empty($like['detached']) ? 'liked.' : 'unliked.';
+        if (empty($like['detached'])) {
+            $message = 'liked.';
+            $code = 201;
+        } else {
+            $message = 'unliked.';
+            $code = 200;
+        }
 
         return responseJson([
             'slug' => $slug,
             'likes' => $like['likes']
-        ], $message);
+        ], $message, $code);
     }
 }

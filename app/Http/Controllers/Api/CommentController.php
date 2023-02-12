@@ -17,11 +17,11 @@ class CommentController extends Controller
 
     public function store(StoreCommentRequest $request, $slug)
     {
-        return new CommentResource(
+        return (new CommentResource(
             $this->repository->create(
                 $slug,
                 $request->toArray() + ['user_id' => $request->user()->id])
-        );
+        ))->response()->setStatusCode(201);
     }
 
     public function show($id)
@@ -41,7 +41,7 @@ class CommentController extends Controller
             abortJson(404);
         }
         $this->repository->delete($id);
-        return responseJson(['id' => $id], 'Comment deleted successfully.');
+        return responseJson([], '', 204);
     }
 
     public function update(UpdateCommentRequest $request, $id)

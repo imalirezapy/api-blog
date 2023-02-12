@@ -19,7 +19,9 @@ class AdminCategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $category = $this->repository->create($request->toArray());
-        return new CategoryResource($category);
+        return (new CategoryResource($category))
+            ->response()
+            ->setStatusCode(201);
     }
 
 
@@ -32,6 +34,6 @@ class AdminCategoryController extends Controller
     public function destroy($slug)
     {
         $this->repository->deleteSlug($slug);
-        return responseJson(['slug' => $slug], 'Category deleted successfully.');
+        return responseJson([], '', 204);
     }
 }
