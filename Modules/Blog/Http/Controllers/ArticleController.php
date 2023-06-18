@@ -35,7 +35,7 @@ class ArticleController extends Controller
 
     public function show(string $slug)
     {
-        $article = $this->repository->findSlug($slug);
+        $article = $this->repository->bySlug($slug);
 
         return new ArticleResource($article);
     }
@@ -72,18 +72,15 @@ class ArticleController extends Controller
 
     public function update(UpdateArticleRequest $request, $slug)
     {
-
         $validated = $request->validated();
 
-        $article = $this->repository->findSlug($request->slug);
+        $article = $this->repository->bySlug($slug);
         if ($request->has('thumbnail')) {
             $validated['thumbnail'] = uploadImage($request, 'thumbnail');
             deleteImage($article['thumbnail']);
         }
 
-        $article = $this->repository->update($slug, $validated);
-
-        return (new ArticleResource($article));
+        return $this->component->update($validated, $article->id, ResponseMessageKeys::SUCCESS_ARTICLE_UPDATED->value);
     }
 
     public function destroy($slug)

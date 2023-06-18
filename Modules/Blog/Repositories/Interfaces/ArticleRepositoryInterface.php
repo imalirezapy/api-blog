@@ -2,18 +2,19 @@
 
 namespace Modules\Blog\Repositories\Interfaces;
 
+use Illuminate\Database\Eloquent\Model;
+
 interface ArticleRepositoryInterface
 {
-    /**
-     *  retrieve all records by parameters in paginated form
-     */
     public function byParams($params = null, $perPage = null);
 
-    public function findSlug(string|null $slug);
+    public function bySlug(string $slug);
 
     public function create($data);
 
-    public function update(string $slug, array $data);
+    public function update(Model $model, array $newData);
+
+    public function byId($id);
 
     public function existsSlug(string $slug): bool;
 

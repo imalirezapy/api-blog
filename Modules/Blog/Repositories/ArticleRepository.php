@@ -6,49 +6,33 @@ use Modules\Blog\Entities\Article;
 use Modules\Blog\Entities\Category;
 use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 use Modules\Core\Traits\Repositories\HasCreate;
+use Modules\Core\Traits\Repositories\HasFind;
+use Modules\Core\Traits\Repositories\HasUpdate;
 
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
-    use HasCreate;
+    use HasCreate,
+        HasUpdate,
+        HasFind;
 
     protected $model = Article::class;
 
-    public function findSlug(string|null $slug)
+    public function bySlug(string $slug)
     {
-        if (is_null($slug)) {
-            return [];
-        }
-        $article = Article::whereSlug($slug)
+        return Article::whereSlug($slug)
             ->with('category')
             ->with(['comments' => function ($builder) {
                 $builder->where('parent_id', null)
                 ->withCount('childes');
             }])
-            ->first()->toArray();
-
-        return  $article;
+            ->first();
     }
-
 
 
     public function existsSlug(string $slug): bool
     {
         return (bool) Article::whereSlug($slug)->first();
-    }
-
-
-    public function update(string $slug, array $data)
-    {
-        $article = Article::whereSlug($slug)->with('category')
-            ->with(['comments' => function ($builder) {
-                $builder->where('parent_id', null)
-                    ->withCount('childes');
-            }])->first();
-
-        $article->update($data);
-
-        return  $article->toArray();
     }
 
 

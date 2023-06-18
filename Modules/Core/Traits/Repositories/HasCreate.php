@@ -1,17 +1,14 @@
 <?php
 namespace Modules\Core\Traits\Repositories;
 
-use Illuminate\Database\Eloquent\Model;
-
 trait HasCreate
 {
     /**
      * create a new record in database by providing details
      *
-     * @param $data
-     * @return mixed
+     * @param array $data
      */
-    public function create($data): Model
+    public function create($data)
     {
         return $this->model::create($data);
     }

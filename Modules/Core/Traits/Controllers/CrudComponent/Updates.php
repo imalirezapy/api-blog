@@ -11,7 +11,7 @@ trait Updates
      */
     public function update(FormRequest|array $request, int $id, string $successMessage): Response
     {
-        if (!($model = $this->repository->find($id))) {
+        if (!($model = $this->repository->byId($id))) {
             return $this->errorResponse(
                 messageKey: $this->notFoundMessage
             );
