@@ -19,10 +19,10 @@ interface CrudComponentInterface
     /**
      * retrieve a list of resources by providing params
      *
-     * @param FormRequest $request
+     * @param FormRequest|array $request
      * @return Response
      */
-    public function parametricIndex(FormRequest $request): Response;
+    public function parametricIndex(FormRequest|array $request): Response;
 
     /**
      * Display the specified resource.
@@ -35,21 +35,21 @@ interface CrudComponentInterface
     /**
      * Update the specified resource in storage.
      *
-     * @param FormRequest $request
+     * @param FormRequest|array $request
      * @param int $id
      * @param string $successMessage
      * @return Response
      */
-    public function update(FormRequest $request, int $id, string $successMessage): Response;
+    public function update(FormRequest|array $request, int $id, string $successMessage): Response;
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param FormRequest $request
+     * @param FormRequest|array $request
      * @param string $successMessage
      * @return Response
      */
-    public function store(FormRequest $request, string $successMessage): Response;
+    public function store(FormRequest|array $request, string $successMessage): Response;
 
     public function destroy(int $id, string $successMessage): Response;
 

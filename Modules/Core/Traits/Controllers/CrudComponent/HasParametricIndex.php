@@ -9,11 +9,13 @@ trait HasParametricIndex
     /**
      * @inheritDoc
      */
-    public function parametricIndex(FormRequest $request): Response
+    public function parametricIndex(FormRequest|array $request): Response
     {
+        $validated = is_array($request) ? $request : $request->validated();
+
         $models = $this->repository->byParams(
-            $request->validated(),
-            $request->validated('perPage')
+            $validated,
+            $validated['perPage'] ?? null,
         );
 
         return $this->successResponseForPaginated(

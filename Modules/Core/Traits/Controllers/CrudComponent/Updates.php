@@ -9,7 +9,7 @@ trait Updates
     /**
      * @inheritDoc
      */
-    public function update(FormRequest $request, int $id, string $successMessage): Response
+    public function update(FormRequest|array $request, int $id, string $successMessage): Response
     {
         if (!($model = $this->repository->find($id))) {
             return $this->errorResponse(
@@ -17,7 +17,7 @@ trait Updates
             );
         }
 
-        $updatedModel = $this->repository->update($model, $request->validated());
+        $updatedModel = $this->repository->update($model, is_array($request) ? $request : $request->validated());
 
         return $this->successResponse(
             data: $updatedModel,
