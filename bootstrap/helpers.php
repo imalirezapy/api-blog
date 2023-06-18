@@ -58,3 +58,19 @@ function deleteImage(string $path)
     }
     return false;
 }
+
+/**
+ * a utility method to read response messages from ./messages.json
+ *
+ * @param string $key
+ * @return string
+ */
+function message(string $key): string
+{
+    $messages = json_decode(
+        file_get_contents(base_path('/messages.json')),
+        true
+    );
+
+    return $messages[$key];
+}
