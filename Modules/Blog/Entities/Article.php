@@ -15,6 +15,7 @@ class Article extends BaseModel
         'title',
         'body',
         'thumbnail',
-        'likes'
+        'likes',
+        'category_id',
     ];
 }

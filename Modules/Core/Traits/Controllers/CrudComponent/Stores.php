@@ -10,10 +10,10 @@ trait Stores
     /**
      * @inheritDoc
      */
-    public function store(FormRequest $request, string $successMessage) : Response
+    public function store(FormRequest|array $request, string $successMessage) : Response
     {
         $newModel = $this->repository
-            ->create($request->validated());
+            ->create(is_array($request) ? $request : $request->validated());
 
         return $this->successResponse(
             data: $newModel,

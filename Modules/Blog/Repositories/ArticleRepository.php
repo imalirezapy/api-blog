@@ -5,10 +5,14 @@ namespace Modules\Blog\Repositories;
 use Modules\Blog\Entities\Article;
 use Modules\Blog\Entities\Category;
 use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
+use Modules\Core\Traits\Repositories\HasCreate;
 
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
+    use HasCreate;
+
+    protected $model = Article::class;
 
     public function findSlug(string|null $slug)
     {
@@ -26,15 +30,6 @@ class ArticleRepository implements ArticleRepositoryInterface
         return  $article;
     }
 
-
-    public function create(int $category_id, array $details)
-    {
-        $category =  Category::find($category_id);
-        $article = $category->articles()->create($details)->toArray();
-        $article['category'] = $category->toArray();
-        $article['comments'] = [];
-        return  $article;
-    }
 
 
     public function existsSlug(string $slug): bool

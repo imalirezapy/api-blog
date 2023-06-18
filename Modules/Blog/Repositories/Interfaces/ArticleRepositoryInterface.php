@@ -11,7 +11,7 @@ interface ArticleRepositoryInterface
 
     public function findSlug(string|null $slug);
 
-    public function create(int $category_id, array $details);
+    public function create($data);
 
     public function update(string $slug, array $data);
 

@@ -62,18 +62,12 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request)
     {
         $validated = $request->validated();
-
-        $category_id = $validated['category_id'];
-        unset($validated['category_id']);
-
         $validated['thumbnail'] = uploadImage($request, 'thumbnail');
 
-        $validated['likes'] = 0;
-
-        $article = $this->repository->create($category_id, $validated);
-        return (new ArticleResource($article))
-            ->response()
-            ->setStatusCode(201);
+        return $this->component->store(
+            $validated,
+            ResponseMessageKeys::SUCCESS_ARTICLE_CREATED->value
+        );
     }
 
     public function update(UpdateArticleRequest $request, $slug)

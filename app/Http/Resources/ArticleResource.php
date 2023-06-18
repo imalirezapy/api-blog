@@ -20,7 +20,7 @@ class ArticleResource extends JsonResource
                     $this->thumbnail :
                     env('app_url') . '/images/' . $this->thumbnail,
 
-            'likes' => $this->likes,
+            'likes' => $this->likes ?? 0,
             'created_at' => $this->created_at,
             'category' => new CategoryCollection($this->category),
 
