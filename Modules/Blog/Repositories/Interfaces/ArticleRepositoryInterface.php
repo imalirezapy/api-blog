@@ -4,15 +4,16 @@ namespace Modules\Blog\Repositories\Interfaces;
 
 interface ArticleRepositoryInterface
 {
-    public function all(bool $pagination, int $pages): array;
+    /**
+     *  retrieve all records by parameters in paginated form
+     */
+    public function byParams($params = null, $perPage = null);
 
-    public function search(int|string $needle, bool $pagination, int $pages): array;
+    public function findSlug(string|null $slug);
 
-    public function findSlug(string|null $slug): array;
+    public function create(int $category_id, array $details);
 
-    public function create(int $category_id, array $details): array;
-
-    public function update(string $slug, array $data): array;
+    public function update(string $slug, array $data);
 
     public function existsSlug(string $slug): bool;
 

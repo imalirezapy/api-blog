@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Blog\Http\Controllers\Admin\AdminArticleController;
+use Modules\Blog\Http\Controllers\ArticleController;
 use Modules\Blog\Http\Controllers\Admin\AdminCategoryController;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::prefix('articles')
-        ->controller(AdminArticleController::class)
+        ->controller(ArticleController::class)
         ->middleware('article_exists')
         ->group(function () {
             Route::post('/', 'store');

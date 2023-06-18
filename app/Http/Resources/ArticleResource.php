@@ -10,19 +10,21 @@ class ArticleResource extends JsonResource
 
     public function toArray($request)
     {
+
         return [
-            'slug' => $this['slug'],
-            'title' => $this['title'],
-            'body' => $this['body'],
-            'thumbnail' => Str::startsWith($this['thumbnail'], 'http') ?
-                    $this['thumbnail'] :
-                    env('app_url') . '/images/' . $this['thumbnail'],
+            'id' => $this->id,
+            'slug' => $this->slug,
+            'title' => $this->title,
+            'body' => $this->body,
+            'thumbnail' => Str::startsWith($this->thumbnail, 'http') ?
+                    $this->thumbnail :
+                    env('app_url') . '/images/' . $this->thumbnail,
 
-            'likes' => $this['likes'],
-            'created_at' => $this['created_at'],
-            'category' => new CategoryCollection($this['category']),
+            'likes' => $this->likes,
+            'created_at' => $this->created_at,
+            'category' => new CategoryCollection($this->category),
 
-            'comments' => CommentResource::collection($this['comments']),
+            'comments' => $this->whenHas('comments', CommentResource::collection($this->comments)),
         ];
     }
 }

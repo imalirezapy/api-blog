@@ -9,30 +9,8 @@ use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 
 class ArticleRepository implements ArticleRepositoryInterface
 {
-    public function Search(int|string $needle, bool $pagination = true, int $pages = 10): array
-    {
-        $articles = Article::where('title','LIKE', '%'.urldecode($needle).'%')->with('category');
 
-        if ($pagination) {
-            $articles = $articles->paginate($pages)->withQueryString();
-        }
-
-        return  $articles->toArray();
-    }
-
-    public function all(bool $pagination = true, int $pages = 10): array
-    {
-        $articles = Article::orderBy('id', 'desc')->with('category');
-
-        if ($pagination) {
-            $articles = $articles->paginate($pages)->withQueryString();
-        }
-
-        return  $articles->toArray();
-    }
-
-
-    public function findSlug(string|null $slug): array
+    public function findSlug(string|null $slug)
     {
         if (is_null($slug)) {
             return [];
@@ -49,7 +27,7 @@ class ArticleRepository implements ArticleRepositoryInterface
     }
 
 
-    public function create(int $category_id, array $details): array
+    public function create(int $category_id, array $details)
     {
         $category =  Category::find($category_id);
         $article = $category->articles()->create($details)->toArray();
@@ -65,7 +43,7 @@ class ArticleRepository implements ArticleRepositoryInterface
     }
 
 
-    public function update(string $slug, array $data): array
+    public function update(string $slug, array $data)
     {
         $article = Article::whereSlug($slug)->with('category')
             ->with(['comments' => function ($builder) {
@@ -84,7 +62,7 @@ class ArticleRepository implements ArticleRepositoryInterface
         return (bool) Article::whereSlug($slug)->first()->delete();
     }
 
-    public function like(string $slug, int $userId): array
+    public function like(string $slug, int $userId)
     {
         $article = Article::whereSlug($slug)->first();
         $like = $article->likes()->toggle([
@@ -95,5 +73,19 @@ class ArticleRepository implements ArticleRepositoryInterface
             'likes' => $likes = $article->likes()->count()
         ]);
         return $like + ['likes' => $likes];
+    }
+
+    public function byParams($params = null, $perPage = null)
+    {
+        return Article::
+            when(isset($params['search']), function ($query) use($params){
+                $query->where('title', 'LIKE', "%{$params['search']}%");
+            })
+            ->when($params['category'] ?? null, function ($query) {
+                $query->with('category');
+            })
+            ->latest()
+            ->paginate($perPage)
+            ->withQueryString();
     }
 }

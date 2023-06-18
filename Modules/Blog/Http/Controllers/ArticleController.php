@@ -3,29 +3,33 @@
 namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\ArticleResource;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Modules\Blog\Http\Requests\FetchArticleRequest;
 use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
+use Modules\Core\Contracts\Controllers\CrudComponentInterface;
+use Modules\Core\Enums\ResponseMessageKeys;
 
 class ArticleController extends Controller
 {
     public function __construct(
-        private ArticleRepositoryInterface $repository
-    ) { }
+        private ArticleRepositoryInterface $repository,
+        private CrudComponentInterface $component,
+    ) {
+
+    }
 
 
-    public function index()
+    public function index(FetchArticleRequest $request)
     {
-        if ($value = request()->query('search')) {
-            $articles = $this->repository->search($value);
-        } else {
-            $articles = $this->repository->all();
+        if (!is_null($request->search)) {
+            $request->search = urldecode($request->search);
         }
-
-        $articles['data'] = ArticleCollection::collection($articles['data'])->toArray(true);
-
-        return $articles;
+        return $this->component->parametricIndex($request);
     }
 
 
@@ -53,5 +57,44 @@ class ArticleController extends Controller
             'slug' => $slug,
             'likes' => $like['likes']
         ], $message, $code);
+    }
+
+    public function store(StoreArticleRequest $request)
+    {
+        $validated = $request->validated();
+
+        $category_id = $validated['category_id'];
+        unset($validated['category_id']);
+
+        $validated['thumbnail'] = uploadImage($request, 'thumbnail');
+
+        $validated['likes'] = 0;
+
+        $article = $this->repository->create($category_id, $validated);
+        return (new ArticleResource($article))
+            ->response()
+            ->setStatusCode(201);
+    }
+
+    public function update(UpdateArticleRequest $request, $slug)
+    {
+
+        $validated = $request->validated();
+
+        $article = $this->repository->findSlug($request->slug);
+        if ($request->has('thumbnail')) {
+            $validated['thumbnail'] = uploadImage($request, 'thumbnail');
+            deleteImage($article['thumbnail']);
+        }
+
+        $article = $this->repository->update($slug, $validated);
+
+        return (new ArticleResource($article));
+    }
+
+    public function destroy($slug)
+    {
+        $this->repository->deleteSlug($slug);
+        return responseJson([], '', 204);
     }
 }
