@@ -23,8 +23,6 @@ class ArticleResource extends JsonResource
             'likes' => $this->likes ?? 0,
             'created_at' => $this->created_at,
             'category' => new CategoryCollection($this->category),
-
-            'comments' => $this->whenHas('comments', CommentResource::collection($this->comments)),
         ];
     }
 }

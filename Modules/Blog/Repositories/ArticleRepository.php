@@ -6,7 +6,7 @@ use Modules\Blog\Entities\Article;
 use Modules\Blog\Entities\Category;
 use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 use Modules\Core\Traits\Repositories\HasCreate;
-use Modules\Core\Traits\Repositories\HasFind;
+use Modules\Core\Traits\Repositories\HasById;
 use Modules\Core\Traits\Repositories\HasUpdate;
 
 
@@ -14,7 +14,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 {
     use HasCreate,
         HasUpdate,
-        HasFind;
+        HasById;
 
     protected $model = Article::class;
 

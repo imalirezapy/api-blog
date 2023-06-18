@@ -35,9 +35,7 @@ class ArticleController extends Controller
 
     public function show(string $slug)
     {
-        $article = $this->repository->bySlug($slug);
-
-        return new ArticleResource($article);
+        return $this->component->showBySlug($slug);
     }
 
 

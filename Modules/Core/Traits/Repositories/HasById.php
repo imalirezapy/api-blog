@@ -2,13 +2,14 @@
 
 namespace Modules\Core\Traits\Repositories;
 
-trait Finds
+trait HasById
 {
     /**
-     * retrieve a single record from the repository
+     * retrieve the selected record from the database by Id
      *
+     * @param int $id
      */
-    public function find($id)
+    public function byId($id)
     {
         return $this->model::where('id', $id)->first();
     }
