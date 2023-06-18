@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace Modules\Blog\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
-use App\Interfaces\CategoryRepositoryInterface;
-use Illuminate\Http\Request;
+use Modules\Blog\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class AdminCategoryController extends Controller
 {

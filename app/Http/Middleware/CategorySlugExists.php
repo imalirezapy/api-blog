@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Interfaces\CategoryRepositoryInterface;
 use Closure;
 use Illuminate\Http\Request;
+use Modules\Blog\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class CategorySlugExists
 {

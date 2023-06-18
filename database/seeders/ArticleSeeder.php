@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Article;
-use App\Models\Category;
-use App\Models\Comment;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Blog\Entities\Article;
+use Modules\Blog\Entities\Category;
 
 class ArticleSeeder extends Seeder
 {

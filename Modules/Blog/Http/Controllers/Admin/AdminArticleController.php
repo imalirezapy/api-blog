@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace Modules\Blog\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
-use App\Interfaces\ArticleRepositoryInterface;
+use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 
 class AdminArticleController extends Controller
 {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Interfaces\ArticleRepositoryInterface;
 use Closure;
 use Illuminate\Http\Request;
+use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 
 class ArticlSlugExists
 {

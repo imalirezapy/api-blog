@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
-use App\Interfaces\CategoryRepositoryInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Modules\Blog\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {

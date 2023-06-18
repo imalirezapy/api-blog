@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace Modules\Blog\Repositories;
 
-use App\Interfaces\CommentRepositoryInterface;
-use App\Models\Article;
-use App\Models\Comment;
+use Modules\Blog\Entities\Article;
+use Modules\Blog\Entities\Comment;
+use Modules\Blog\Repositories\Interfaces\CommentRepositoryInterface;
 
 class CommentRepository implements CommentRepositoryInterface
 {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Category;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
+use Modules\Blog\Entities\Category;
 
 class StoreArticleRequest extends BaseFormRequest
 {

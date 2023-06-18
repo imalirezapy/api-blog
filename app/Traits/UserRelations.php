@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use App\Models\Article;
-use App\Models\Comment;
+use Modules\Blog\Entities\Article;
+use Modules\Blog\Entities\Comment;
 
 trait UserRelations
 {

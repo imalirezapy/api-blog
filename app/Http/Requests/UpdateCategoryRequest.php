@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 
-use App\Interfaces\CategoryRepositoryInterface;
+use Modules\Blog\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class UpdateCategoryRequest extends BaseFormRequest
 {

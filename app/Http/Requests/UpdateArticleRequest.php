@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 
-use App\Interfaces\ArticleRepositoryInterface;
-use App\Models\Category;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
+use Modules\Blog\Entities\Category;
+use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 
 class UpdateArticleRequest extends BaseFormRequest
 {

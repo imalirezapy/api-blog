@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Models\Article;
+use Modules\Blog\Entities\Article;
 
 trait CategoryRelations
 {

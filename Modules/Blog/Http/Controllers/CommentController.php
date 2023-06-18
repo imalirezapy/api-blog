@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
-use App\Interfaces\CommentRepositoryInterface;
-use Illuminate\Http\Request;
+use Modules\Blog\Repositories\Interfaces\CommentRepositoryInterface;
 
 class CommentController extends Controller
 {

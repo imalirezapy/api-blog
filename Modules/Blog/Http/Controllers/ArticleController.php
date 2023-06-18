@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
 use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\ArticleResource;
-use App\Interfaces\ArticleRepositoryInterface;
 use Illuminate\Http\Request;
+use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 
 class ArticleController extends Controller
 {

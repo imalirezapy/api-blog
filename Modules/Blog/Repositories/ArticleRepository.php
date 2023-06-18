@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace Modules\Blog\Repositories;
 
-use App\Interfaces\ArticleRepositoryInterface;
-use App\Models\Article;
-use App\Models\Category;
+use Modules\Blog\Entities\Article;
+use Modules\Blog\Entities\Category;
+use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 
 
 class ArticleRepository implements ArticleRepositoryInterface

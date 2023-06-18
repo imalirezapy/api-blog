@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces;
+namespace Modules\Blog\Repositories\Interfaces;
 
 interface CommentRepositoryInterface
 {

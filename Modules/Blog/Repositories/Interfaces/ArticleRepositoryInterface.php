@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Interfaces;
-
-use App\Models\Article;
+namespace Modules\Blog\Repositories\Interfaces;
 
 interface ArticleRepositoryInterface
 {
