@@ -7,11 +7,11 @@ use Modules\Blog\Http\Controllers\Admin\AdminCategoryController;
 Route::group(['prefix' => 'admin'], function () {
     Route::prefix('articles')
         ->controller(ArticleController::class)
-        ->middleware('article_exists')
+        ->whereNumber('article')
         ->group(function () {
             Route::post('/', 'store');
-            Route::put('/{articleSlug}', 'update');
-            Route::delete('/{articleSlug}', 'destroy');
+            Route::put('/{article}', 'update');
+            Route::delete('/{article}', 'destroy');
         });
 
     Route::prefix('categories')

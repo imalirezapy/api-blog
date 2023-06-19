@@ -21,9 +21,11 @@ Route::middleware('auth:sanctum')
         Route::prefix('articles')
             ->controller(ArticleController::class)
             ->middleware('article_exists')
+            ->whereNumber('article')
             ->group(function () {
                 Route::get('', 'index');
-                Route::get('/{articleSlug}', 'show');
+                Route::get('/{article}', 'show');
+                Route::get('/slug/{slug}', 'showBySlug');
                 Route::patch('/{articleSlug}/like', 'like');
                 # TODO: change route
                 Route::post('/{articleSlug}/comments', 'store');

@@ -10,11 +10,13 @@ interface ArticleRepositoryInterface
 
     public function bySlug(string $slug);
 
+    public function byId($id);
+
     public function create($data);
 
     public function update(Model $model, array $newData);
 
-    public function byId($id);
+    public function delete($id);
 
     public function existsSlug(string $slug): bool;
 

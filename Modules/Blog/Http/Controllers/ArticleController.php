@@ -3,6 +3,7 @@
 namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Kernel;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleCollection;
@@ -33,7 +34,12 @@ class ArticleController extends Controller
     }
 
 
-    public function show(string $slug)
+    public function show($id)
+    {
+        return $this->component->show($id);
+    }
+
+    public function showBySlug($slug)
     {
         return $this->component->showBySlug($slug);
     }
@@ -68,22 +74,21 @@ class ArticleController extends Controller
         );
     }
 
-    public function update(UpdateArticleRequest $request, $slug)
+    public function update(UpdateArticleRequest $request, $id)
     {
         $validated = $request->validated();
-
-        $article = $this->repository->bySlug($slug);
-        if ($request->has('thumbnail')) {
+        $article = $this->repository->byId($id);
+        if ($request->has('thumbnail') && $article) {
             $validated['thumbnail'] = uploadImage($request, 'thumbnail');
             deleteImage($article['thumbnail']);
         }
 
-        return $this->component->update($validated, $article->id, ResponseMessageKeys::SUCCESS_ARTICLE_UPDATED->value);
+        # TODO: change upload and delete image
+        return $this->component->update($validated, $article?->id ?? 0, ResponseMessageKeys::SUCCESS_ARTICLE_UPDATED->value);
     }
 
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $this->repository->deleteSlug($slug);
-        return responseJson([], '', 204);
+        return $this->component->destroy($id, ResponseMessageKeys::SUCCESS_ARTICLE_DELETED->value);
     }
 }
