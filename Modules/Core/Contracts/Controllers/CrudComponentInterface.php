@@ -14,7 +14,7 @@ interface CrudComponentInterface
      * @param FormRequest|null $request
      * @return Response
      */
-    public function index(FormRequest|null $request): Response;
+    public function index(FormRequest|null $request = null): Response;
 
     /**
      * retrieve a list of resources by providing params
@@ -28,9 +28,10 @@ interface CrudComponentInterface
      * Display the specified resource.
      *
      * @param int $id
+     * @param string $method
      * @return Response
      */
-    public function show(int $id): Response;
+    public function show(int $id, string $method = 'byId'): Response;
 
     /**
      * Update the specified resource in storage.
@@ -53,15 +54,17 @@ interface CrudComponentInterface
 
     public function destroy(int $id, string $successMessage): Response;
 
+
     /**
      * Get resource by slug
      *
      * Get a single resource by providing slug
      *
      * @param string $slug
+     * @param string $method
      * @return Response
      */
-    public function showBySlug(string $slug): Response;
+    public function showBySlug(string $slug, string $method = 'bySlug'): Response;
 
     /**
      * Get resource by attribute and its value
@@ -69,8 +72,9 @@ interface CrudComponentInterface
      * Get a single resource by providing the corresponding attribute and its value
      *
      * @param string $attribute
+     * @param string $method
      * @param $value
      * @return Response
      */
-    public function showBy(string $attribute, $value): Response;
+    public function showBy(string $attribute, $value, string $method = 'findBy'): Response;
 }

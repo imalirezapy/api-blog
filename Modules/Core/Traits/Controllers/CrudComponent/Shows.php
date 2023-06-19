@@ -11,12 +11,12 @@ trait Shows
      * @param int $id
      * @return Response
      */
-    public function show(int $id): Response
+    public function show(int $id, string $method = 'byId'): Response
     {
         if (method_exists($this->repository, 'find')) {
             $model = $this->repository->find($id);
         } else {
-            $model = $this->repository->byId($id);
+            $model = $this->repository->$method($id);
         }
 
         if (!$model) {

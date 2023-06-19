@@ -8,10 +8,10 @@ trait ShowsBy
     /**
      * @inheritDoc
      */
-    public function showBy(string $attribute, $value): Response
+    public function showBy(string $attribute, $value, string $method = 'findBy'): Response
     {
         return $this->successResponse(
-            data: $this->repository->findBy($attribute, $value),
+            data: $this->repository->$method($attribute, $value),
             apiResource: $this->resourceClass
         );
     }

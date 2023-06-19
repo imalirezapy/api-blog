@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Blog\Http\Controllers\ArticleController;
-use Modules\Blog\Http\Controllers\Admin\AdminCategoryController;
+use Modules\Blog\Http\Controllers\CategoryController;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::prefix('articles')
@@ -15,11 +15,11 @@ Route::group(['prefix' => 'admin'], function () {
         });
 
     Route::prefix('categories')
-        ->controller(AdminCategoryController::class)
-        ->middleware('category_exists')
+        ->controller(CategoryController::class)
+        ->whereNumber('category')
         ->group(function () {
             Route::post('/', 'store');
-            Route::put('/{categorySlug}', 'update');
-            Route::delete('/{categorySlug}', 'destroy');
+            Route::put('/{category}', 'update');
+            Route::delete('/{category}', 'destroy');
         });
 });

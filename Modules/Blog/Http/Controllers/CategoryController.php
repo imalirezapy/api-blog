@@ -3,23 +3,44 @@
 namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryCollection;
-use App\Http\Resources\CategoryResource;
-use Modules\Blog\Repositories\Interfaces\CategoryRepositoryInterface;
+use Modules\Blog\Http\Requests\StoreCategoryRequest;
+use Modules\Blog\Http\Requests\UpdateCategoryRequest;
+use Modules\Core\Contracts\Controllers\CrudComponentInterface;
+use Modules\Core\Enums\ResponseMessageKeys;
 
 class CategoryController extends Controller
 {
     public function __construct(
-        private CategoryRepositoryInterface $repository
+        private readonly CrudComponentInterface $component,
     ) { }
 
     public function index()
     {
-        return CategoryCollection::collection($this->repository->all());
+        return $this->component->index();
     }
 
-    public function show($slug)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        return new CategoryResource($this->repository->withArticles($slug));
+        return $this->component->update(
+            $request,
+            $id,
+            ResponseMessageKeys::SUCCESS_CATEGORY_UPDATED->value
+        );
+    }
+
+    public function store(StoreCategoryRequest $request)
+    {
+        return $this->component->store(
+            $request,
+            ResponseMessageKeys::SUCCESS_CATEGORY_CREATED->value
+        );
+    }
+
+    public function destroy($id)
+    {
+        return $this->component->destroy(
+            $id,
+            ResponseMessageKeys::SUCCESS_CATEGORY_DELETED->value
+        );
     }
 }

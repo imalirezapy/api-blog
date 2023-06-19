@@ -20,7 +20,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     protected $model = Article::class;
 
-    public function bySlug(string $slug)
+    public function bySlug($slug)
     {
         return Article::whereSlug($slug)
             ->with('category')

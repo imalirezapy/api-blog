@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace Modules\Blog\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
@@ -22,7 +22,7 @@ class ArticleResource extends JsonResource
 
             'likes' => $this->likes ?? 0,
             'created_at' => $this->created_at,
-            'category' => new CategoryCollection($this->category),
+            'category' => $this->whenHas('category', new CategoryResource($this->category)),
         ];
     }
 }

@@ -8,7 +8,7 @@ interface ArticleRepositoryInterface
 {
     public function byParams($params = null, $perPage = null);
 
-    public function bySlug(string $slug);
+    public function bySlug($slug);
 
     public function byId($id);
 

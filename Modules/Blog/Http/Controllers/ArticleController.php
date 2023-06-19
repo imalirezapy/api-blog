@@ -3,14 +3,10 @@
 namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Kernel;
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
-use App\Http\Resources\ArticleCollection;
-use App\Http\Resources\ArticleResource;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\Blog\Http\Requests\FetchArticleRequest;
+use Modules\Blog\Http\Requests\StoreArticleRequest;
+use Modules\Blog\Http\Requests\UpdateArticleRequest;
 use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 use Modules\Core\Contracts\Controllers\CrudComponentInterface;
 use Modules\Core\Enums\ResponseMessageKeys;
