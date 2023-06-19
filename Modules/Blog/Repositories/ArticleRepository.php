@@ -3,7 +3,6 @@
 namespace Modules\Blog\Repositories;
 
 use Modules\Blog\Entities\Article;
-use Modules\Blog\Entities\Category;
 use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
 use Modules\Core\Traits\Repositories\HasCreate;
 use Modules\Core\Traits\Repositories\HasById;
@@ -15,19 +14,21 @@ class ArticleRepository implements ArticleRepositoryInterface
 {
     use HasCreate,
         HasUpdate,
-        HasById,
         HasDelete;
 
     protected $model = Article::class;
 
     public function bySlug($slug)
     {
-        return Article::whereSlug($slug)
+        return $this->model::whereSlug($slug)
             ->with('category')
-            ->with(['comments' => function ($builder) {
-                $builder->where('parent_id', null)
-                ->withCount('childes');
-            }])
+            ->first();
+    }
+
+    public function byId($id)
+    {
+        return $this->model::whereId($id)
+            ->with('category')
             ->first();
     }
 
@@ -58,7 +59,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function byParams($params = null, $perPage = null)
     {
-        return Article::
+        return $this->model::
             when(isset($params['search']), function ($query) use($params){
                 $query->where('title', 'LIKE', "%{$params['search']}%");
             })

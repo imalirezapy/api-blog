@@ -9,8 +9,7 @@ class ArticleResource extends JsonResource
 {
 
     public function toArray($request)
-    {
-
+    {;
         return [
             'id' => $this->id,
             'slug' => $this->slug,
@@ -22,6 +21,10 @@ class ArticleResource extends JsonResource
 
             'likes' => $this->likes ?? 0,
             'created_at' => $this->created_at,
+            'category' => $this->when(
+                condition: $this->resource->toArray()['category'] ?? null,
+                value: new CategoryResource($this->category),
+            ),
         ];
     }
 }
