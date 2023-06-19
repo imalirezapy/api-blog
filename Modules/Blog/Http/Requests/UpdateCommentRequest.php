@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Modules\Blog\Http\Requests;
 
+
+use App\Http\Requests\BaseFormRequest;
 
 class UpdateCommentRequest extends BaseFormRequest
 {

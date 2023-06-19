@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Modules\Blog\Http\Requests;
 
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 use Modules\Blog\Entities\Category;

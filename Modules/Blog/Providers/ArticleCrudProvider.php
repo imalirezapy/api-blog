@@ -2,10 +2,10 @@
 
 namespace Modules\Blog\Providers;
 
-use App\Http\Resources\ArticleResource;
 use Illuminate\Support\ServiceProvider;
 use Modules\Blog\Http\Controllers\ArticleController;
 use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
+use Modules\Blog\Transformers\ArticleResource;
 use Modules\Core\Contracts\Controllers\CrudComponentInterface;
 use Modules\Core\Enums\ResponseMessageKeys;
 use Modules\Core\Http\Controllers\CrudComponent;

@@ -3,10 +3,10 @@
 namespace Modules\Blog\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCommentRequest;
-use App\Http\Requests\UpdateCommentRequest;
-use App\Http\Resources\CommentResource;
+use Modules\Blog\Http\Requests\StoreCommentRequest;
+use Modules\Blog\Http\Requests\UpdateCommentRequest;
 use Modules\Blog\Repositories\Interfaces\CommentRepositoryInterface;
+use Modules\Blog\Transformers\CommentResource;
 
 class CommentController extends Controller
 {

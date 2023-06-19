@@ -1,24 +1,20 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Modules\Blog\Http\Requests;
 
 
-use Modules\Blog\Repositories\Interfaces\CategoryRepositoryInterface;
+use App\Http\Requests\BaseFormRequest;
 
 class UpdateCategoryRequest extends BaseFormRequest
 {
     public function rules()
     {
-        /**
-         * @var CategoryRepositoryInterface $repository
-         */
-        $repository = resolve(CategoryRepositoryInterface::class);
         return [
             'slug' => [
                 'string',
                 'min:3',
                 'max:70',
-                'unique:articles,slug,' . ($repository->findSlug($this->route('slug'))['id'] ?? ''),
+                'unique:articles,slug,' . $this->route('category'),
             ],
             'title' => [
                 'string',
