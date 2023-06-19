@@ -22,7 +22,6 @@ class ArticleResource extends JsonResource
 
             'likes' => $this->likes ?? 0,
             'created_at' => $this->created_at,
-            'category' => $this->whenHas('category', new CategoryResource($this->category)),
         ];
     }
 }

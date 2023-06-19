@@ -62,8 +62,8 @@ class ArticleRepository implements ArticleRepositoryInterface
             when(isset($params['search']), function ($query) use($params){
                 $query->where('title', 'LIKE', "%{$params['search']}%");
             })
-            ->when($params['category'] ?? null, function ($query) {
-                $query->with('category');
+            ->when($params['category_id'] ?? null, function ($query) use($params){
+                $query->where('category_id', $params['category_id']);
             })
             ->latest()
             ->paginate($perPage)

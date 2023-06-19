@@ -31,7 +31,13 @@ Route::middleware('auth:sanctum')
                 Route::post('/{articleSlug}/comments', 'store');
             });
 
-        Route::get('/categories', [CategoryController::class, 'index']);
+        Route::prefix('categories')
+            ->whereNumber('category')
+            ->group(function () {
+                Route::get('/', [CategoryController::class, 'index']);
+                Route::get('/{category}/articles', [CategoryController::class, 'articles']);
+            });
+
 
         Route::prefix('comments')
             ->controller(CommentController::class)

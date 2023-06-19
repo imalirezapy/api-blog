@@ -2,16 +2,20 @@
 
 namespace Modules\Blog\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Modules\Blog\Http\Requests\FetchArticleRequest;
 use Modules\Blog\Http\Requests\StoreCategoryRequest;
 use Modules\Blog\Http\Requests\UpdateCategoryRequest;
+use Modules\Blog\Repositories\Interfaces\ArticleRepositoryInterface;
+use Modules\Blog\Transformers\ArticleResource;
 use Modules\Core\Contracts\Controllers\CrudComponentInterface;
 use Modules\Core\Enums\ResponseMessageKeys;
+use Modules\Core\Http\Controllers\ApiController;
 
-class CategoryController extends Controller
+class CategoryController extends ApiController
 {
     public function __construct(
         private readonly CrudComponentInterface $component,
+        private ArticleRepositoryInterface $articleRepository,
     ) { }
 
     public function index()
@@ -43,4 +47,25 @@ class CategoryController extends Controller
             ResponseMessageKeys::SUCCESS_CATEGORY_DELETED->value
         );
     }
+
+    public function articles(FetchArticleRequest $request, $id)
+    {
+        if (!$this->component->repository->byId($id)) {
+            return $this->errorResponse(
+                messageKey: $this->component->notFoundMessage
+            );
+        }
+        $models = $this->articleRepository->byParams(
+            [
+                'category_id' => $id,
+            ],
+            $request->perPage,
+        );
+
+        return $this->successResponseForPaginated(
+            data: $models,
+            apiResource: ArticleResource::class,
+        );
+    }
+
 }

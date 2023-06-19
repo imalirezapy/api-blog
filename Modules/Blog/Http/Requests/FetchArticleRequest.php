@@ -14,7 +14,7 @@ class FetchArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'category' => 'nullable|boolean',
+            'category_id' => 'nullable',
             'search' => 'nullable|string',
             'perPage' => 'integer|min:1',
         ];

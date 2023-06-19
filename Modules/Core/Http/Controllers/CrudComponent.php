@@ -26,8 +26,8 @@ class CrudComponent extends ApiController implements CrudComponentInterface
 
 
     public function __construct(
-        private $repository,
-        private readonly string  $resourceClass,
-        private readonly string $notFoundMessage,
+        public $repository,
+        public readonly string  $resourceClass,
+        public readonly string $notFoundMessage,
     ) { }
 }
