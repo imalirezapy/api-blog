@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Blog\Entities\Article;
 use Modules\Blog\Entities\Category;
+use Modules\Blog\Entities\Comment;
 
 class ArticleSeeder extends Seeder
 {
@@ -16,9 +17,7 @@ class ArticleSeeder extends Seeder
     public function run()
     {
         Category::factory()->has(
-            Article::factory()
-                ->hasComments(3)
-                ->count(3))
-            ->count(4)->create();
+            Article::factory()->count(3)
+        )->count(4)->create();
     }
 }

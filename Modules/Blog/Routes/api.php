@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')
             ->middleware('article_exists')
             ->whereNumber('article')
             ->group(function () {
-                Route::get('', 'index');
+                Route::get('', 'index')->name('article.index');
                 Route::get('/{article}', 'show');
                 Route::get('/slug/{slug}', 'showBySlug');
                 Route::patch('/{articleSlug}/like', 'like');

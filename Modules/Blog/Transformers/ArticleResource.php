@@ -21,6 +21,7 @@ class ArticleResource extends JsonResource
 
             'likes' => $this->likes ?? 0,
             'created_at' => $this->created_at,
+            'category_id' => $this->category_id,
             'category' => $this->when(
                 condition: $this->resource->toArray()['category'] ?? null,
                 value: new CategoryResource($this->category),
