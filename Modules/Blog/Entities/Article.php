@@ -4,6 +4,7 @@ namespace Modules\Blog\Entities;
 
 use App\Models\BaseModel;
 use App\Traits\ArticleRelations;
+use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -19,4 +20,10 @@ class Article extends BaseModel
         'likes',
         'category_id',
     ];
+
+    protected static function newFactory()
+    {
+        return ArticleFactory::new();
+    }
+
 }

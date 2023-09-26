@@ -4,9 +4,12 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Modules\Blog\Entities\Article;
 
 class ArticleFactory extends Factory
 {
+    protected $model = Article::class;
+
     public function definition()
     {
         return [
