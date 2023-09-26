@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\UserRelations;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -41,5 +42,10 @@ class User extends Authenticatable
         static::creating(function ($model) {
             $model->created_at = $model->freshTimestamp();
         });
+    }
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 }
