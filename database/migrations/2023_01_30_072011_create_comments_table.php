@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TablesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,25 +14,29 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create(TablesEnum::COMMENTS->value, function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id')->constrained('articles')
+            $table->foreignId('article_id')
+                ->constrained(TablesEnum::ARTICLES->value)
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-
-            $table->foreignId('user_id')->constrained('users')
+            $table->morphs('author');
+            $table->morphs('replied_to');
+            $table->text('body');
+            $table->enum('status', [
+                'pending',
+                'rejected',
+                'approved',
+            ])->default('pending');
+            $table->foreignId('parent_id')
+                ->constrained(TablesEnum::COMMENTS->value)
                 ->cascadeOnUpdate()
-                ->restrictOnDelete();
+                ->cascadeOnDelete();
+            $table->unsignedInteger('downvotes_r')->default(0);
+            $table->unsignedInteger('upvotes_r')->default(0);
 
-            $table->string('body', 700);
-
-            $table->foreignId('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('comments')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();;
-
-            $table->timestamp('created_at');
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -42,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists(TablesEnum::COMMENTS->value);
     }
 };

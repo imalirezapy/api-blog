@@ -1,4 +1,4 @@
-h<?php
+<?php
 
 use App\Enums\TablesEnum;
 use Illuminate\Database\Migrations\Migration;
@@ -9,10 +9,11 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
      */
     public function up(): void
     {
-        Schema::create(TablesEnum::USERS->value, function (Blueprint $table) {
+        Schema::create(TablesEnum::ADMINS->value, function (Blueprint $table) {
             $table->id();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists(TablesEnum::USERS->value);
+        Schema::dropIfExists(TablesEnum::ADMINS->value);
     }
 };
