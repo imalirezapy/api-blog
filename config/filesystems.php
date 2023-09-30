@@ -44,12 +44,6 @@ return [
             'throw' => false,
         ],
 
-        'images' => [
-            'driver' => 'local',
-            'root' => storage_path('uploads/images'),
-            'url' => '/images',
-            'throw' => false,
-        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
