@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CommentStatusesEnum;
 use App\Enums\TablesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -23,11 +24,8 @@ return new class extends Migration
             $table->morphs('author');
             $table->morphs('replied_to');
             $table->text('body');
-            $table->enum('status', [
-                'pending',
-                'rejected',
-                'approved',
-            ])->default('pending');
+            $table->enum('status', CommentStatusesEnum::values())
+                ->default(CommentStatusesEnum::PENDING->value);
             $table->foreignId('parent_id')
                 ->constrained(TablesEnum::COMMENTS->value)
                 ->cascadeOnUpdate()

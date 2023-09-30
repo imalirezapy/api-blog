@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ArticleStatusesEnum;
 use App\Enums\TablesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -25,12 +26,8 @@ return new class extends Migration
                 ->cascadeOnUpdate();
             $table->string('thumbnail');
             $table->integer('likes')->default(0);
-            $table->enum('status', [
-                'drafted',
-                'archived',
-                'proposed',
-                'published',
-            ])->default('drafted');
+            $table->enum('status', ArticleStatusesEnum::values())
+                ->default(ArticleStatusesEnum::DRAFTED->value);
             $table->string('banner_path')->nullable();
             $table->string('banner_relative_path')->nullable();
             $table->boolean('has_comments')
