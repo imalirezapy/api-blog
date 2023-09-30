@@ -9,10 +9,11 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
      */
     public function up(): void
     {
-        Schema::create(TablesEnum::PASSWORD_RESET_TOKENS->value, function (Blueprint $table) {
+        Schema::create(TablesEnum::ADMIN_PASSWORD_RESET_TOKENS->value, function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
@@ -21,9 +22,10 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
      */
     public function down(): void
     {
-        Schema::dropIfExists(TablesEnum::PASSWORD_RESET_TOKENS->value);
+        Schema::dropIfExists(TablesEnum::ADMIN_PASSWORD_RESET_TOKENS->value);
     }
 };
