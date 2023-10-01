@@ -16,7 +16,7 @@ trait ThrowsFailure
     public function throwErrorResponse()
     {
         throw $this->errorResponse(
-            $this->assembleFailedResponse(message: self::FAILED_MESSAGE)
+            $this->assembleFailedResponse(message: self::DEFAULT_FAILED_MESSAGE)
         );
     }
 
