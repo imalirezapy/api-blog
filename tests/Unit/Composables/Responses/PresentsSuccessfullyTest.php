@@ -35,7 +35,7 @@ class PresentsSuccessfullyTest extends TestCase
         $exceptedData = ['key' => 'value'];
 
         $response = $this->getTestInstanceOfResponse(
-            $this->presentSuccessfulResponse($exceptedData)
+            $this->presentData($exceptedData)
         );
 
         $response->assertOk()
